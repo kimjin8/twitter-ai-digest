@@ -1,0 +1,26 @@
+{
+  "name": "twitter-ai-digest",
+  "version": "1.0.0",
+  "description": "Daily Twitter AI Digest — analyze and synthesize tweets into a beautiful email",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dry-run": "node index.js --dry-run",
+    "auth": "node index.js --auth",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "googleapis": "^144.0.0",
+    "node-cron": "^3.0.3",
+    "p-limit": "^4.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

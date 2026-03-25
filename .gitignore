@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Local environment & credentials
+.env
+google-credentials.json
+google-token.json
+
+# Cached data
+data/
+
+# OS files
+.DS_Store
+
+# Vibe coding files
+implementation_plan.md
+twitter-digest-gcp-export-2026-03-25-03_40_39.md
+reference-implementation-plan_startup-event-curator.md
