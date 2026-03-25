@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Development & test files
+tests/
+*.test.js
+vitest.config.js
+coverage/
+
+# Local environment & credentials
+.env
+google-credentials.json
+google-token.json
+
+# Cached data
+data/
+
+# Documentation
+*.md
+implementation_plan.md
+LICENSE
+
+# Version control
+.git/
+.gitignore
+
+# OS files
+.DS_Store
