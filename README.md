@@ -1,79 +1,49 @@
 # 🐦 Twitter AI Intelligence Brief
 
-A standalone Node.js application that scrapes top AI thought-leaders, curates high-signal insights using Gemini AI, and delivers a clean, formatted HTML digest via Gmail.
+An autonomous Node.js intelligence agent that transforms the noise of AI Twitter into high-density, executive-level briefings. It monitors global AI leaders, filters for high-signal insights using engagement-weighted scoring, and delivers a beautifully formatted HTML synthesis via Gemini 3 AI.
 
-## 🚀 Quick Start (3 Steps)
+## ✨ Features
 
-### 1. Setup TwitterAPI.io
-1. Create an account at [twitterapi.io](https://twitterapi.io).
-2. Recharge $10 (approx. 1,000,000 credits).
-3. Copy your **API Key**.
+- **Cost-Optimized Datalake:** Powered by TwitterAPI.io with advanced batched searching to keep operating costs <$10/month.
+- **Noise-Free Signal:** Automated filters discard retweets, replies, and "thread-spam," focusing only on original impactful content.
+- **Multidimensional Synthesis:** Gemini 3 AI categorizes insights into *Tools & Products*, *Industry Trajectory*, and *Research*.
+- **Premium Delivery:** Responsive HTML email briefings delivered directly to your inbox via Gmail API.
+- **Resilient Architecture:** Multi-model fallback chain (Gemini 3 → 3.1 → 2.5) and dual-API support (TwitterAPI.io + Official X API).
 
-### 2. Configure Environment
-1. Copy `.env.example` to `.env`.
-2. Fill in your `TWITTERAPI_IO_KEY`, `GEMINI_API_KEY`, and `RECIPIENT_EMAIL`.
-3. Put your `google-credentials.json` (from GCP) in the root folder.
+## 🛠️ Architecture
 
-### 3. Run It
+The pipeline follows a strict **Fetch → Parse → Score → Synthesize → Deliver** workflow:
+
+1. **Orchestrator (`index.js`):** Manages the daily execution lifecycle.
+2. **Standardized Clients:** Modular drivers for different data sources.
+3. **The Scorer:** Engagement-weighted rankings to identify the top 30 most impactful updates.
+4. **The Synthesis Engine:** Custom prompt-engineering to prevent "AI laziness" and output structured intelligence.
+
+## 🚀 Getting Started
+
+### 1. Environment Configuration
+Create a `.env` file from the example and provide the following keys:
+- `TWITTERAPI_IO_KEY`: For cost-optimized data sourcing.
+- `GEMINI_API_KEY`: For AI synthesis.
+- `RECIPIENT_EMAIL`: Your target briefing destination.
+
+### 2. Authorization & Setup
 ```bash
-# Install dependencies
 npm install
-
-# Authorize Gmail (first time only)
-npm run auth
-
-# Test a single run without sending email
-npm run dry-run
-
-# Run and send email
-npm start
+npm run auth       # Authorize Gmail access
+npm run dry-run    # Test logic without sending email
 ```
 
-## 🛠️ Project Structure
-
-- `index.js`: The "conductor" orchestrating the whole pipeline.
-- `src/twitter-client.js`: Switchboard that manages data source (primary: TwitterAPI.io).
-- `src/clients/twitterapi-io.js`: Optimized fetcher using Advanced Search batching.
-- `src/clients/official-x-api.js`: Fallback client for official X API v2.
-- `src/tweet-parser.js`: Filtering out noise (retweets, replies, short tweets).
-- `src/tweet-scorer.js`: Scoring based on engagement, recency, and priority.
-- `src/digest-generator.js`: The Gemini 3 AI engine with a 3-model fallback chain.
-- `src/email.js`: Beautifully formatted HTML email delivery.
-
-## ☁️ Deploying to Google Cloud (Cloud Run Jobs)
-
-This app is designed to run as a **Cloud Run Job**, triggered daily by **Cloud Scheduler**.
-
-### Build & Push
+### 3. Execution
 ```bash
-gcloud config set project twitter-ai-digest
-gcloud auth configure-docker us-west1-docker.pkg.dev
-docker build -t us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest .
-docker push us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest
+npm start          # Standard daily run
 ```
 
-### Create Job
-```bash
-gcloud run jobs create twitter-ai-digest \
-  --image=us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest \
-  --region=us-west1 \
-  --memory=512Mi \
-  --set-env-vars="GEMINI_API_KEY=...,TWITTERAPI_IO_KEY=...,RECIPIENT_EMAIL=..."
-```
+---
 
-### Schedule (8:00 AM UTC Daily)
-```bash
-gcloud scheduler jobs create http twitter-ai-digest-daily \
-  --schedule="0 8 * * *" \
-  --uri="[JOB_URL]" \
-  --http-method=POST \
-  --oauth-service-account-email="[SERVICE_ACCOUNT]"
-```
+## ☁️ Deployment
 
-## 🧠 AI Strategy
+This project is optimized for serverless execution as a **Cloud Run Job** triggered by **Cloud Scheduler**. For detailed infrastructure setup and GCP CLI commands, refer to the internal documentation.
 
-We avoid "AI laziness" by pre-filtering thousands of tweets down to the **Top 30** highest-signal items before sending them to Gemini. This ensures the prompt remains focused and the analysis stays deep.
-
-- **Primary:** Gemini 3 Flash
-- **Fallback 1:** Gemini 3.1 Flash Lite
-- **Fallback 2:** Gemini 2.5 Flash
+---
+*Note: This repository does not include a license and is provided for educational/demonstration purposes.*
