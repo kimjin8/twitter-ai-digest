@@ -105,8 +105,32 @@ Key environment variables:
 
 ---
 
-## 8. Roadmap & Future Features
-- [ ] **Thread Reconstruction:** Automatically fetch and synthesize full Twitter threads.
-- [ ] **LLM Comparison:** Use multiple LLMs to verify technical claims.
-- [ ] **Interactive Feedback:** Allow the user to "upvote/downvote" summaries to tune the scorer.
-- [ ] **RSS/Slack Outbound:** Support delivery to Slack channels or Notion pages.
+---
+
+## 9. Operations & GCP Infrastructure Detail
+
+### 9.1 Container Registry
+- **Project ID:** `twitter-ai-digest`
+- **Region:** `us-west1`
+- **Registry Path:** `us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest`
+
+### 9.2 Build & Deploy Commands
+```bash
+# Push new image
+gcloud builds submit --tag us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest
+
+# Update Job with new Env Vars
+gcloud run jobs update twitter-ai-digest \
+  --region=us-west1 \
+  --env-vars-file=/tmp/env-vars.yaml
+```
+
+### 9.3 Cloud Scheduler
+- **Job Name:** `twitter-ai-digest-daily`
+- **Schedule:** `0 8 * * *` (8:00 AM UTC)
+- **Target:** Cloud Run Job Execution
+
+### 9.4 Monitoring Policies
+- **Log Metric:** `twitter_digest_errors` (captures `❌` and `ERROR` severity).
+- **Alerting Policy:** `Twitter AI Digest - Errors Detected`.
+- **Primary Contact:** `hongkimjin@gmail.com`
