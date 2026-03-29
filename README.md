@@ -4,15 +4,14 @@ A standalone Node.js application that scrapes top AI thought-leaders, curates hi
 
 ## 🚀 Quick Start (3 Steps)
 
-### 1. Setup X (Twitter) API
-1. Create a developer account at [developer.x.com](https://developer.x.com).
-2. Create a Project and an App.
-3. Enable **Pay-Per-Use** billing (approx. $15/month for 99 accounts daily).
-4. Copy your **Bearer Token**.
+### 1. Setup TwitterAPI.io
+1. Create an account at [twitterapi.io](https://twitterapi.io).
+2. Recharge $10 (approx. 1,000,000 credits).
+3. Copy your **API Key**.
 
 ### 2. Configure Environment
 1. Copy `.env.example` to `.env`.
-2. Fill in your `X_BEARER_TOKEN`, `GEMINI_API_KEY`, and `RECIPIENT_EMAIL`.
+2. Fill in your `TWITTERAPI_IO_KEY`, `GEMINI_API_KEY`, and `RECIPIENT_EMAIL`.
 3. Put your `google-credentials.json` (from GCP) in the root folder.
 
 ### 3. Run It
@@ -33,7 +32,9 @@ npm start
 ## 🛠️ Project Structure
 
 - `index.js`: The "conductor" orchestrating the whole pipeline.
-- `src/twitter-client.js`: Official X API v2 communication.
+- `src/twitter-client.js`: Switchboard that manages data source (primary: TwitterAPI.io).
+- `src/clients/twitterapi-io.js`: Optimized fetcher using Advanced Search batching.
+- `src/clients/official-x-api.js`: Fallback client for official X API v2.
 - `src/tweet-parser.js`: Filtering out noise (retweets, replies, short tweets).
 - `src/tweet-scorer.js`: Scoring based on engagement, recency, and priority.
 - `src/digest-generator.js`: The Gemini 3 AI engine with a 3-model fallback chain.
@@ -57,7 +58,7 @@ gcloud run jobs create twitter-ai-digest \
   --image=us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest \
   --region=us-west1 \
   --memory=512Mi \
-  --set-env-vars="GEMINI_API_KEY=...,X_BEARER_TOKEN=...,RECIPIENT_EMAIL=..."
+  --set-env-vars="GEMINI_API_KEY=...,TWITTERAPI_IO_KEY=...,RECIPIENT_EMAIL=..."
 ```
 
 ### Schedule (8:00 AM UTC Daily)
@@ -76,6 +77,3 @@ We avoid "AI laziness" by pre-filtering thousands of tweets down to the **Top 30
 - **Primary:** Gemini 3 Flash
 - **Fallback 1:** Gemini 3.1 Flash Lite
 - **Fallback 2:** Gemini 2.5 Flash
-
-## ⚖️ License
-MIT

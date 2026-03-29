@@ -15,6 +15,9 @@ function parseTweets(rawTweets, username) {
     .map(t => {
       const tweetDate = new Date(t.created_at);
       
+      // Determine the correct username (batched search provides author_username)
+      const u = t.author_username || username;
+
       // Basic metrics
       const likes = t.public_metrics?.like_count || 0;
       const retweets = t.public_metrics?.retweet_count || 0;
@@ -27,9 +30,9 @@ function parseTweets(rawTweets, username) {
 
       return {
         id: t.id,
-        username,
+        username: u,
         text: t.text,
-        url: `https://x.com/${username}/status/${t.id}`,
+        url: `https://x.com/${u}/status/${t.id}`,
         timestamp: t.created_at,
         tweetDate,
         metrics: { likes, retweets, replies, quotes },
