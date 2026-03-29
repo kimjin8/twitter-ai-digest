@@ -3,13 +3,13 @@
 // ============================================================
 
 const axios = require('axios');
-const { TWITTERAPI_IO_KEY } = require('../config');
+const { TWITTERAPI_IO_KEY, MIN_FAVES_FILTER } = require('../config');
 
 const API_BASE = 'https://api.twitterapi.io/twitter';
 
 /**
  * TwitterAPI.io client for fetching tweets via Advanced Search.
- * This is the cost-optimized strategy ($0.15 / 1k tweets).
+ * Optimized Strategy: Source-level filtering to save credits.
  */
 class TwitterapiIoClient {
   constructor() {
@@ -18,16 +18,18 @@ class TwitterapiIoClient {
 
   /**
    * Fetch latest tweets for a batch of users using Advanced Search.
-   * Query: (from:user1 OR from:user2...) since:YYYY-MM-DD
+   * Query: (from:user1 OR from:user2...) since:YYYY-MM-DD -is:retweet -is:reply min_faves:5
    */
   async getLatestTweetsForBatch(usernames, sinceDate) {
     if (!usernames || usernames.length === 0) return [];
 
-    // Build query: (from:user1 OR from:user2) since:2026-03-24
+    // Build query with cost-saving filters
     const fromClause = usernames.map(u => `from:${u}`).join(' OR ');
-    const query = `(${fromClause}) since:${sinceDate}`;
+    
+    // Move filters to the query level to reduce the number of tweets we pay for
+    const query = `(${fromClause}) since:${sinceDate} -is:retweet -is:reply min_faves:${MIN_FAVES_FILTER}`;
 
-    console.log(`🔍 Batch searching: ${usernames.join(', ')}...`);
+    console.log(`🔍 Batch searching (Optimized): ${usernames.length} users...`);
     
     try {
       const response = await axios.get(`${API_BASE}/tweet/advanced_search`, {
@@ -41,10 +43,9 @@ class TwitterapiIoClient {
       });
 
       const tweets = response.data?.tweets || [];
-      console.log(`   ✅ Found ${tweets.length} tweets for this batch.`);
+      console.log(`   ✅ Found ${tweets.length} high-signal tweets for this batch.`);
       
-      // Standardize the format to match the official API fields needed by parser
-      // official-x-api fields: id, text, created_at, public_metrics, entities, author_id
+      // Standardize the format
       return tweets.map(t => ({
         id: t.id,
         text: t.text,
@@ -57,7 +58,6 @@ class TwitterapiIoClient {
         },
         entities: t.entities || {},
         author_id: t.author?.id,
-        // Helper field for the parser to know which user this belongs to
         author_username: t.author?.userName 
       }));
     } catch (err) {
