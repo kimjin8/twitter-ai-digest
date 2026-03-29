@@ -22,10 +22,10 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 
 ## 4. Functional Requirements
 
-### 4.1 Data Ingestion (X API v2)
+### 4.1 Data Ingestion (TwitterAPI.io)
 - Monitor a configurable list of ~100 top AI thought-leaders.
-- Fetch all original tweets from the last 24 hours.
-- Cache User IDs to avoid redundant API calls.
+- Fetch all original tweets from the last 24 hours via Advanced Search queries.
+- Optimize costs by batching 10 users per search query.
 
 ### 4.2 The "Noise Filter" (Parsing)
 - **Discard:** Retweets, replies, and quoted-only tweets (unless they add value).
@@ -60,22 +60,24 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 | Component | Technology | Role |
 | :--- | :--- | :--- |
 | **Orchestrator** | Node.js (v20+) | Main pipeline execution logic |
-| **Datalake** | X (Twitter) API v2 | High-reliability data source (Pay-Per-Use) |
+| **Datalake** | TwitterAPI.io | Cost-optimized search data source (~$7/mo) |
 | **Logic Engine** | Gemini AI | Semantic analysis and synthesis |
 | **Infrastructure** | GCP Cloud Run Job | Cost-efficient, serverless execution |
 | **Trigger** | Cloud Scheduler | Cron-based daily triggering |
 | **Delivery** | Gmail API | Secure email transport via Google OAuth2 |
+| **Fallback** | X API v2 | Reserved for high-reliability emergency fallback |
 
 ### Data Flow Diagram (Mermaid)
 ```mermaid
 graph TD
     A[Cloud Scheduler] -->|8:00 AM UTC| B(Cloud Run Job)
-    B --> C[X API v2: Fetch 24h Tweets]
+    B --> C[TwitterAPI.io: Advanced Search Batches]
     C --> D[Parsing & Noise Filter]
     D --> E[Weighted Scoring Logic]
     E --> F[Gemini 3: Synthesis of Top 30]
     F --> G[Gmail API: Send HTML Digest]
     G --> H[End User Inbox]
+    C -.->|Fallback| CA[Official X API v2]
 ```
 
 ---

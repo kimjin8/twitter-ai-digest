@@ -5,8 +5,9 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
-// ── X (Twitter) API ──────────────────────────────────────────
+// ── X (Twitter) Data Sources ────────────────────────────────
 const X_BEARER_TOKEN = process.env.X_BEARER_TOKEN;
+const TWITTERAPI_IO_KEY = process.env.TWITTERAPI_IO_KEY;
 
 // ── Gemini AI ───────────────────────────────────────────────
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -37,7 +38,12 @@ const GOOGLE_SCOPES = [
 // ── Validation ──────────────────────────────────────────────
 function validateConfig() {
   const missing = [];
-  if (!X_BEARER_TOKEN) missing.push('X_BEARER_TOKEN');
+  
+  // Need at least one source
+  if (!X_BEARER_TOKEN && !TWITTERAPI_IO_KEY) {
+    missing.push('X_BEARER_TOKEN or TWITTERAPI_IO_KEY');
+  }
+  
   if (!GEMINI_API_KEY) missing.push('GEMINI_API_KEY');
 
   if (missing.length > 0) {
@@ -50,6 +56,7 @@ function validateConfig() {
 
 module.exports = {
   X_BEARER_TOKEN,
+  TWITTERAPI_IO_KEY,
   GEMINI_API_KEY,
   PRIMARY_MODEL,
   FALLBACK_MODEL,

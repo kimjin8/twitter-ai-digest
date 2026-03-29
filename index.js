@@ -42,27 +42,48 @@ async function runWorkflow({ dryRun = false } = {}) {
   }
 
   // 3. Fetch & Parse Tweets
-  console.log(`📡 Monitoring ${TWITTER_USERNAMES.length} profiles...`);
+  const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  console.log(`📡 Monitoring ${TWITTER_USERNAMES.length} profiles (since ${last24h})...`);
   let allParsedTweets = [];
 
-  // Parallel fetch with concurrency limit of 10
-  const pLimit = (await import('p-limit')).default;
-  const limit = pLimit(10);
-
-  const tasks = TWITTER_USERNAMES.map(username => limit(async () => {
-    try {
-      const userId = await twitterClient.getUserId(username);
-      if (!userId) return;
-      
-      const rawTweets = await twitterClient.getUserTweets(userId);
-      const parsed = parseTweets(rawTweets, username);
-      allParsedTweets.push(...parsed);
-    } catch (err) {
-      console.error(`   ❌ Failed to process @${username}:`, err.message);
+  // Check if current client supports batched search (TwitterAPI.io)
+  if (twitterClient.getLatestTweetsForBatch) {
+    const batchSize = 10;
+    for (let i = 0; i < TWITTER_USERNAMES.length; i += batchSize) {
+      const batch = TWITTER_USERNAMES.slice(i, i + batchSize);
+      try {
+        const rawTweets = await twitterClient.getLatestTweetsForBatch(batch, last24h);
+        const parsed = parseTweets(rawTweets); 
+        allParsedTweets.push(...parsed);
+        
+        // Respect rate limits (Free tier: 1 req / 5s)
+        if (i + batchSize < TWITTER_USERNAMES.length) {
+          console.log(`   ⏳ Sleeping 5s to respect rate limits...`);
+          await new Promise(resolve => setTimeout(resolve, 5100));
+        }
+      } catch (err) {
+        console.error(`   ❌ Failed to process batch ${i/batchSize + 1}:`, err.message);
+      }
     }
-  }));
+  } else {
+    // Fallback: Parallel fetch one by one (Official X API)
+    const pLimit = (await import('p-limit')).default;
+    const limit = pLimit(10);
 
-  await Promise.all(tasks);
+    const tasks = TWITTER_USERNAMES.map(username => limit(async () => {
+      try {
+        const userId = await twitterClient.getUserId(username);
+        if (!userId) return;
+        
+        const rawTweets = await twitterClient.getUserTweets(userId);
+        const parsed = parseTweets(rawTweets, username);
+        allParsedTweets.push(...parsed);
+      } catch (err) {
+        console.error(`   ❌ Failed to process @${username}:`, err.message);
+      }
+    }));
+    await Promise.all(tasks);
+  }
 
   if (allParsedTweets.length === 0) {
     console.log("📭 No high-signal tweets found in the last 24 hours. Aborting.");
