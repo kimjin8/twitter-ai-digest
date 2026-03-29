@@ -9,6 +9,10 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const X_BEARER_TOKEN = process.env.X_BEARER_TOKEN;
 const TWITTERAPI_IO_KEY = process.env.TWITTERAPI_IO_KEY;
 
+// ── Optimization Settings ───────────────────────────────────
+// Filtering at the source (API Level) saves credits
+const MIN_FAVES_FILTER = parseInt(process.env.MIN_FAVES_FILTER || '5', 10);
+
 // ── Gemini AI ───────────────────────────────────────────────
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const PRIMARY_MODEL = 'gemini-3-flash-preview';
@@ -57,6 +61,7 @@ function validateConfig() {
 module.exports = {
   X_BEARER_TOKEN,
   TWITTERAPI_IO_KEY,
+  MIN_FAVES_FILTER,
   GEMINI_API_KEY,
   PRIMARY_MODEL,
   FALLBACK_MODEL,
