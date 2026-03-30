@@ -9,7 +9,10 @@ async function sendEmail(authClient, htmlBody) {
   console.log(`📧 Sending email to ${RECIPIENT_EMAIL}...`);
   const gmail = google.gmail({ version: 'v1', auth: authClient });
 
-  const subject = "🗓️ Your Daily AI Intelligence Digest";
+  // Use yesterday's UTC date — the day whose tweets this digest covers
+  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const dateStr = `${String(yesterday.getUTCMonth() + 1).padStart(2, '0')}/${String(yesterday.getUTCDate()).padStart(2, '0')}/${String(yesterday.getUTCFullYear()).slice(-2)}`;
+  const subject = `🐦 Your Twitter AI Intelligence Digest - ${dateStr}`;
   
   const messageParts = [
     `To: ${RECIPIENT_EMAIL}`,
@@ -33,7 +36,7 @@ async function sendEmail(authClient, htmlBody) {
       requestBody: { raw: encodedMessage },
     });
     console.log('✅ Email sent! Message ID:', res.data.id);
-    return res.data;
+    return { ...res.data, subject };
   } catch (err) {
     console.error('❌ Failed to send email:', err.message);
     throw err;

@@ -8,9 +8,6 @@
 function parseTweets(rawTweets, username) {
   if (!Array.isArray(rawTweets)) return [];
 
-  const now = new Date();
-  const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-
   return rawTweets
     .map(t => {
       const tweetDate = new Date(t.created_at);
@@ -31,6 +28,7 @@ function parseTweets(rawTweets, username) {
       return {
         id: t.id,
         username: u,
+        authorName: t.author_name || t.author?.name || u,
         text: t.text,
         url: `https://x.com/${u}/status/${t.id}`,
         timestamp: t.created_at,
@@ -43,16 +41,14 @@ function parseTweets(rawTweets, username) {
       };
     })
     .filter(t => {
-      // 1. Must be from last 24 hours
-      if (t.tweetDate < twentyFourHoursAgo) return false;
-      
-      // 2. Remove retweets (we want original thoughts)
+      // 1. Remove retweets (we want original thoughts)
+      // Note: date filtering is handled upstream by the since: API query parameter
       if (t.isRetweet) return false;
 
-      // 3. Remove replies (usually low context for a digest)
+      // 2. Remove replies (usually low context for a digest)
       if (t.isReply) return false;
 
-      // 4. Remove very short tweets (low signal)
+      // 3. Remove very short tweets (low signal)
       if (t.text.length < 20) return false;
 
       return true;

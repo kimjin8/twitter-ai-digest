@@ -17,6 +17,7 @@ const { parseTweets } = require("./src/tweet-parser");
 const { scoreTweets } = require("./src/tweet-scorer");
 const { generateDigestHTML } = require("./src/digest-generator");
 const { sendEmail } = require("./src/email");
+const { saveRun } = require("./src/firestore");
 
 const MAX_TWEETS_FOR_AI = 30;
 
@@ -24,9 +25,10 @@ const MAX_TWEETS_FOR_AI = 30;
  * Run the complete Twitter AI digest pipeline.
  */
 async function runWorkflow({ dryRun = false } = {}) {
+  const startedAt = new Date();
   console.log("\n========================================");
   console.log("🚀 Daily Twitter AI Digest");
-  console.log(`   ${new Date().toLocaleString()} (Local Time)`);
+  console.log(`   ${startedAt.toLocaleString()} (Local Time)`);
   console.log("========================================\n");
 
   // 1. Validate environment
@@ -99,9 +101,11 @@ async function runWorkflow({ dryRun = false } = {}) {
   console.log(`🎯 Selected top ${topTweets.length} tweets for AI synthesis.`);
 
   // 5. Generate AI Digest
-  const htmlEmail = await generateDigestHTML(topTweets);
+  const { html: htmlEmail, modelUsed } = await generateDigestHTML(topTweets);
 
   // 6. Send Email
+  let emailMessageId = null;
+  let emailSubject = null;
   if (dryRun) {
     console.log("\n========================================");
     console.log("🏜️  DRY RUN — Email not sent");
@@ -109,8 +113,46 @@ async function runWorkflow({ dryRun = false } = {}) {
     console.log("Use a browser to preview the HTML if needed.");
   } else {
     if (!authClient) throw new Error("Cannot send email without Google auth.");
-    await sendEmail(authClient, htmlEmail);
+    const emailResult = await sendEmail(authClient, htmlEmail);
+    emailMessageId = emailResult?.id ?? null;
+    emailSubject = emailResult?.subject ?? null;
   }
+
+  // 7. Persist run to Firestore
+  const digestDate = startedAt.toISOString().split('T')[0];
+  await saveRun({
+    date: digestDate,
+    started_at: startedAt.toISOString(),
+    completed_at: new Date().toISOString(),
+    stats: {
+      filtered_tweet_count: allParsedTweets.length,
+      top30_count: topTweets.length,
+    },
+    top30: topTweets.map((t, i) => ({
+      rank: i + 1,
+      tweet_id: t.id,
+      username: t.username,
+      author_name: t.authorName,
+      text: t.text,
+      url: t.url,
+      tweet_timestamp: t.timestamp,
+      metrics: t.metrics,
+      engagement_total: t.engagementTotal,
+      score: t.score,
+      hours_ago: t.hoursAgo,
+    })),
+    synthesis: {
+      model_used: modelUsed,
+      html: htmlEmail,
+    },
+    delivery: {
+      sent: !dryRun,
+      message_id: emailMessageId,
+      subject: emailSubject,
+      recipient: RECIPIENT_EMAIL,
+      dry_run: dryRun,
+    },
+  });
 
   console.log("\n========================================");
   console.log("✅ Workflow complete!");
