@@ -126,7 +126,7 @@ gcloud run jobs update twitter-ai-digest \
 ```
 
 ### 9.3 Cloud Scheduler
-- **Job Name:** `twitter-ai-digest-daily`
+- **Job Name:** `twitter-ai-digest-scheduler`
 - **Schedule:** `0 0 * * *` (12:00 AM UTC / midnight) — covers the full prior UTC calendar day
 - **Target:** Cloud Run Job Execution
 
