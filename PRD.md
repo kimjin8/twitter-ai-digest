@@ -51,7 +51,7 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 
 ### 4.5 Delivery (Gmail API)
 - Transform AI output into a premium, responsive HTML email.
-- Send daily at a fixed time (8:00 AM UTC / 1:00 AM PT).
+- Send daily at 12:00 AM UTC (midnight), covering the full prior UTC calendar day.
 
 ---
 
@@ -70,7 +70,7 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 ### Data Flow Diagram (Mermaid)
 ```mermaid
 graph TD
-    A[Cloud Scheduler] -->|8:00 AM UTC| B(Cloud Run Job)
+    A[Cloud Scheduler] -->|12:00 AM UTC| B(Cloud Run Job)
     B --> C[TwitterAPI.io: Advanced Search Batches]
     C --> D[Parsing & Noise Filter]
     D --> E[Weighted Scoring Logic]
@@ -127,7 +127,7 @@ gcloud run jobs update twitter-ai-digest \
 
 ### 9.3 Cloud Scheduler
 - **Job Name:** `twitter-ai-digest-daily`
-- **Schedule:** `0 8 * * *` (8:00 AM UTC)
+- **Schedule:** `0 0 * * *` (12:00 AM UTC / midnight) — covers the full prior UTC calendar day
 - **Target:** Cloud Run Job Execution
 
 ### 9.4 Monitoring Policies

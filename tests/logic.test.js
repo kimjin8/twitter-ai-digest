@@ -35,4 +35,16 @@ describe('Tweet Processing Logic', () => {
     const scored = scoreTweets(parsed);
     expect(scored[0].score).toBeGreaterThan(0);
   });
+
+  it('should not filter tweets by age — date filtering is handled by the since: API query', () => {
+    const oldTweet = {
+      id: '4',
+      text: 'This is a week-old tweet that the parser should no longer reject.',
+      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+      public_metrics: { like_count: 50, retweet_count: 10, reply_count: 5, quote_count: 2 }
+    };
+    const parsed = parseTweets([oldTweet], 'testuser');
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0].id).toBe('4');
+  });
 });
