@@ -29,7 +29,7 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 
 ### 4.2 The "Noise Filter" (Parsing)
 - **Discard:** Retweets, replies, and quoted-only tweets (unless they add value).
-- **Discard:** Tweets shorter than 30 characters (low-signal).
+- **Discard:** Tweets shorter than 20 characters (low-signal).
 - **Clean:** Remove URLs (parsed separately), trailing whitespace, and junk characters.
 
 ### 4.3 Composite Scoring (The Brain)
@@ -116,13 +116,20 @@ Key environment variables:
 
 ### 9.2 Build & Deploy Commands
 ```bash
-# Push new image
-gcloud builds submit --tag us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest
+# Build and push new image
+gcloud builds submit --tag us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest --project=twitter-ai-digest
 
-# Update Job with new Env Vars
+# Deploy new image to Cloud Run Job
 gcloud run jobs update twitter-ai-digest \
   --region=us-west1 \
-  --env-vars-file=/tmp/env-vars.yaml
+  --image=us-west1-docker.pkg.dev/twitter-ai-digest/twitter-ai-digest-repo/twitter-ai-digest:latest \
+  --project=twitter-ai-digest
+
+# (Optional) Update env vars only — no rebuild needed
+gcloud run jobs update twitter-ai-digest \
+  --region=us-west1 \
+  --env-vars-file=/tmp/env-vars.yaml \
+  --project=twitter-ai-digest
 ```
 
 ### 9.3 Cloud Scheduler
