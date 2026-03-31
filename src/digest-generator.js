@@ -17,6 +17,7 @@ const {
 function buildPrompt(topTweets, dateString) {
   const data = topTweets.map(t => ({
     username: t.username,
+    authorName: t.authorName,
     text: t.text,
     url: t.url,
     timestamp: t.timestamp,
@@ -44,9 +45,10 @@ Rules:
 HTML Design:
 - Header: Dark navy (#1a1a2e), title "🐦 Twitter AI Intelligence Brief", subtitle showing the HEADER_DATE and "Technical Scout Analysis".
 - Summary: 3 high-level synthesis points (trends).
+- Section headers: Each pillar has exactly ONE full-width section header rendered once above all its cards (e.g. "🚀 PILLAR 1: TOOLS & PRODUCTS"). Individual cards do NOT repeat the pillar label or badge.
 - Cards: White background, 1px border (#e1e4e8), 15px padding, 12px margin.
-- Tags: Pill badges color-coded per pillar.
-- Register/Source: Links to tweet.
+- Card fields: Each labeled field within a card (e.g. Technical Design, Why it Matters, Stack) must be in its own <p> tag. Never run multiple fields as inline text within a single paragraph.
+- Register/Source: Show "Source: " followed by the "authorName" (the person's display name, not their @handle). Keep the hyperlink pointing to the tweet "url".
 
 Input Data:
 ${JSON.stringify(data, null, 2)}`;
@@ -56,7 +58,7 @@ ${JSON.stringify(data, null, 2)}`;
  * Generate HTML email using Gemini with fallback logic.
  */
 async function generateDigestHTML(topTweets) {
-  if (topTweets.length === 0) return 'No high-signal updates today.';
+  if (topTweets.length === 0) return { html: 'No high-signal updates today.', modelUsed: null };
 
   console.log('🤖 Generating AI digest...');
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -93,7 +95,7 @@ async function generateDigestHTML(topTweets) {
         .trim();
 
       console.log(`✅ Success with ${entry.label} (${html.length} chars)`);
-      return html;
+      return { html, modelUsed: entry.name };
     } catch (err) {
       console.error(`   ❌ ${entry.label} failed:`, err.message);
       if (entry === models[models.length - 1]) throw err;

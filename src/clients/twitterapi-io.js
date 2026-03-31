@@ -58,6 +58,7 @@ class TwitterapiIoClient {
         },
         entities: t.entities || {},
         author_id: t.author?.id,
+        author_name: t.author?.name,
         author_username: t.author?.userName 
       }));
     } catch (err) {
