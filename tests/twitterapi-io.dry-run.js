@@ -32,7 +32,7 @@ async function testBatchSearch() {
     } else {
       console.log(`✅ Success! Found ${tweets.length} tweets.`);
       tweets.slice(0, 3).forEach(t => {
-        console.log(`   - [@${t.author_username}] ${t.text.substring(0, 60)}...`);
+        console.log(`   - [${t.author_name} (@${t.author_username})] ${t.text.substring(0, 50)}...`);
       });
     }
   } catch (err) {

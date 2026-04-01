@@ -19,7 +19,7 @@ const { generateDigestHTML } = require("./src/digest-generator");
 const { sendEmail } = require("./src/email");
 const { saveRun } = require("./src/firestore");
 
-const MAX_TWEETS_FOR_AI = 30;
+const MAX_TWEETS_FOR_AI = 50;
 
 /**
  * Run the complete Twitter AI digest pipeline.
@@ -126,9 +126,9 @@ async function runWorkflow({ dryRun = false } = {}) {
     completed_at: new Date().toISOString(),
     stats: {
       filtered_tweet_count: allParsedTweets.length,
-      top30_count: topTweets.length,
+      top_tweet_count: topTweets.length,
     },
-    top30: topTweets.map((t, i) => ({
+    top_tweets: topTweets.map((t, i) => ({
       rank: i + 1,
       tweet_id: t.id,
       username: t.username,
