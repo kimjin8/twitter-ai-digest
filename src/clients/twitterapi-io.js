@@ -35,7 +35,7 @@ class TwitterapiIoClient {
       const response = await axios.get(`${API_BASE}/tweet/advanced_search`, {
         params: {
           query: query,
-          query_type: 'Latest'
+          query_type: 'Top'
         },
         headers: {
           'X-API-Key': this.apiKey

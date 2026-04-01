@@ -24,7 +24,7 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 
 ### 4.1 Data Ingestion (TwitterAPI.io)
 - Monitor a configurable list of ~100 top AI thought-leaders.
-- Fetch all original tweets from the last 24 hours via Advanced Search queries.
+- Fetch top-engagement original tweets from the last 24 hours via Advanced Search (`query_type: Top`).
 - Optimize costs by batching 10 users per search query.
 
 ### 4.2 The "Noise Filter" (Parsing)
@@ -37,13 +37,16 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
     - **Engagement (50%):** Weighted sum of Likes, Retweets, Replies, and Quotes.
     - **Recency (30%):** Bias towards the most recent updates within the window.
     - **Priority (20%):** Custom weights for specific high-value accounts (configurable).
-- Select only the **Top 30** tweets for the final synthesis.
+- Select only the **Top 50** tweets for the final synthesis.
 
 ### 4.4 AI Synthesis (Gemini 3 Flash)
+- **4-Step Pipeline:** Triage → Select → Executive Summary → Write Cards.
+- **Founder Actionability Filter:** Topics ranked by "Would a founder change a decision this week?"
 - **Multi-Pillar Analysis:** Categorize news into:
     1. 🚀 Tools & Products (Technical Design, Stack)
     2. 📊 Industry Intelligence (Trajectory, Market Shifts)
     3. 🔬 Research & Discoveries (Papers, LLM constraints)
+- **Output:** 6-9 cards across pillars, each with Topic, Technical Design, Why it Matters, and Source.
 - **Three-Model Fallback:**
     - Primary: `gemini-3-flash-preview`
     - Fallback 1: `gemini-3.1-flash-lite-preview`
