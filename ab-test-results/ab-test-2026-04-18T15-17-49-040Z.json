@@ -1,0 +1,853 @@
+{
+  "analysisA": {
+    "listName": "Original (100 accounts)",
+    "totalAccounts": 100,
+    "activeAccounts": 28,
+    "silentAccounts": 72,
+    "silentAccountsList": [
+      "lexfridman",
+      "sama",
+      "kaifulee",
+      "ID_AA_Carmack",
+      "AndrewYNg",
+      "karpathy",
+      "2morrowknight",
+      "ylecun",
+      "drfeifei",
+      "demishassabis",
+      "TamaraMcCleary",
+      "geoffreyhinton",
+      "goodfellow_ian",
+      "jeffdean",
+      "timnitgebru",
+      "oriolvinyalsml",
+      "soumithchintala",
+      "sallyeaves",
+      "fabiomoioli",
+      "thatroblennon",
+      "Nicochan33",
+      "chrismessina",
+      "iainljbrown",
+      "HaroldSinnott",
+      "mrgreen",
+      "clairesilver12",
+      "katecrawford",
+      "drhassanrashidi",
+      "abhi1thakur",
+      "nigewillson",
+      "_karenhao",
+      "mrogati",
+      "oliverchristie",
+      "mfordfuture",
+      "marcusborba",
+      "miketamir",
+      "grok_",
+      "vinod1975",
+      "svenphilipsen",
+      "fogoros",
+      "CadeMetz",
+      "rodneyabrooks",
+      "wellingmax",
+      "marktabnet",
+      "etzioni",
+      "alexjc",
+      "genekogan",
+      "mjrobbins",
+      "localghost",
+      "bobgourley",
+      "andyjankowski",
+      "paulroetzer",
+      "SourabhSKatoch",
+      "bobviolino",
+      "terence_mills",
+      "johnchavens",
+      "debashis_dutta",
+      "davidwkenny",
+      "petitegeek",
+      "faustospain",
+      "wil_bielert",
+      "sarahburnett",
+      "sudalairajkumar",
+      "hsryueli",
+      "inma_martinez",
+      "pandeyajay7",
+      "kath0134",
+      "ibarkin",
+      "rschmelzer",
+      "jainkunal",
+      "DaphneKoller",
+      "mvollmer1"
+    ],
+    "totalTweets": 118,
+    "tweetsPerActiveAccount": "4.2",
+    "highSignalTweets": 45,
+    "signalDensity": "38.1%",
+    "avgEngagement": 109,
+    "medianEngagement": 34,
+    "topByVolume": [
+      [
+        "ronald_vanloon",
+        34
+      ],
+      [
+        "scobleizer",
+        28
+      ],
+      [
+        "datachaz",
+        11
+      ],
+      [
+        "nandodf",
+        4
+      ],
+      [
+        "antgrasso",
+        3
+      ],
+      [
+        "ceobillionaire",
+        3
+      ],
+      [
+        "garymarcus",
+        3
+      ],
+      [
+        "randal_olson",
+        3
+      ],
+      [
+        "ingliguori",
+        3
+      ],
+      [
+        "marek_rosa",
+        3
+      ]
+    ],
+    "top50UniqueAuthors": 12,
+    "top50AuthorList": [
+      "datachaz",
+      "fchollet",
+      "ronald_vanloon",
+      "antgrasso",
+      "waitin4agi_",
+      "scobleizer",
+      "ingliguori",
+      "kirkdborne",
+      "garymarcus",
+      "bilawalsidhu",
+      "bamitav",
+      "randal_olson"
+    ],
+    "top50Tweets": [
+      {
+        "username": "DataChaz",
+        "text": "🚨 This is absolute GOLD.\n\nThe @AnthropicAI engineer who literally wrote \"Building Effective Agents\" just dropped a 14-m",
+        "engagement": 4358,
+        "score": 0.626
+      },
+      {
+        "username": "fchollet",
+        "text": "Constraints are the catalyst of invention. An infinite search space leads to paralysis. The most creative inventions hap",
+        "engagement": 44,
+        "score": 0.48
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Butterfly-Inspired Micro-#Drones Push the Future of Stealth #Tech\nby @amazingthings_\n \n#EmergingTech #Technology #Innova",
+        "engagement": 11,
+        "score": 0.46
+      },
+      {
+        "username": "antgrasso",
+        "text": "Machine learning enables dynamic pricing through demand signals and competitive data in real time.\n\nAs margins narrow an",
+        "engagement": 72,
+        "score": 0.454
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Waste Heat, Smart Cities: Finland Powers Homes with #Data Center Energy\nby @sciencegirl\n  \n#Technology #Innovation #Emer",
+        "engagement": 7,
+        "score": 0.44
+      },
+      {
+        "username": "waitin4agi_",
+        "text": "If your goal is to get big on social platforms the stupidest thing you can do is to be anonymous. Brain biology has evol",
+        "engagement": 860,
+        "score": 0.434
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Smart PDLC Film Turns Any Glass Surface Instantly Private\nby @DonaldTunp75739\n  \n#Innovation #EmergingTech #Tech #Techno",
+        "engagement": 7,
+        "score": 0.433
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Sweden Tests eRoadArlanda Electrified Road That Charges #EVs While Driving\nby @_fluxfeeds\n \n#EmergingTech #Technology #I",
+        "engagement": 20,
+        "score": 0.423
+      },
+      {
+        "username": "DataChaz",
+        "text": "opus 4.7 has reached AGI https://t.co/jROJyzr1pz",
+        "engagement": 9,
+        "score": 0.42
+      },
+      {
+        "username": "DataChaz",
+        "text": "Absolute gold advice from Claude Opus 4.7 (left)… still processing whatever Gemini (right) is recommending 😁 https://t.",
+        "engagement": 14,
+        "score": 0.417
+      },
+      {
+        "username": "Scobleizer",
+        "text": "I told you that Anthropic believe that 50% of jobs will be done by AI in about two years, which was the average of what ",
+        "engagement": 178,
+        "score": 0.406
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Tonight I hung out with an entrepreneur who is building https://t.co/1tXBvxF3GP\n\nDatacenters in Space.\n\nHe is putting 42",
+        "engagement": 88,
+        "score": 0.401
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Garry reveals a ton about his AI code statements.\n\nWho cares about how many lines of code the AI writes?\n\nIt is what it ",
+        "engagement": 17,
+        "score": 0.397
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Memory innovation for AI.",
+        "engagement": 36,
+        "score": 0.396
+      },
+      {
+        "username": "Scobleizer",
+        "text": "I have talked to thousands about consciousness.\n\nThe only ones who really define it are those who can view their own bra",
+        "engagement": 50,
+        "score": 0.39
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Ungoverned Vendetta: The Electric Off-Road Beast Redefining All-Terrain Skateboarding\nby @IntEngineering\n\n#Innovation #E",
+        "engagement": 17,
+        "score": 0.386
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Developing Transparent and Explainable #AI Systems\nby @antgrasso\n\n#ArtificialIntelligence #MachineLearning #ML #DL https",
+        "engagement": 12,
+        "score": 0.378
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Mobility for All: Electric Trike Built for Seamless Wheelchair Entry\nby @ViralRushX\n  \n#TechForGood #EmergingTech #Techn",
+        "engagement": 7,
+        "score": 0.366
+      },
+      {
+        "username": "ingliguori",
+        "text": "8 types of LLMs used in AI agents 🤖\n\nGPT • MoE • LRM • VLM • SLM • LAM • HRM • LCM\n\nDifferent models for reasoning, per",
+        "engagement": 18,
+        "score": 0.366
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "CATL Unveils #Autonomous #Robot That Drives to Your #EV for On-Demand Charging\nby @IntEngineering\n\n#Robotics #Engineerin",
+        "engagement": 10,
+        "score": 0.36
+      },
+      {
+        "username": "KirkDBorne",
+        "text": "https://t.co/UA3nSZ9xXD",
+        "engagement": 16,
+        "score": 0.346
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "108-Armed Cotton Picking #Robot Harvests 120× Faster Than Humans\nvia @ZappyZappy7\n\n#AgriTech #Robotics #Innovation #Tech",
+        "engagement": 19,
+        "score": 0.334
+      },
+      {
+        "username": "GaryMarcus",
+        "text": "“my honest read is that a significant portion of this spending is driven by competitive fear rather than demonstrated re",
+        "engagement": 200,
+        "score": 0.33
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Light Up and Charge Up: Smart Street Lighting with Wireless Phone Charging\nby @gigadgets_\n  \n#Innovation #TechForGood #E",
+        "engagement": 9,
+        "score": 0.329
+      },
+      {
+        "username": "bilawalsidhu",
+        "text": "A few weeks ago @steipete told me he was thinking about canceling his TED talk. Too busy. No time to prep. Working on Op",
+        "engagement": 1150,
+        "score": 0.327
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "LiDAR Vision Meets Advanced Kinematics in Obstacle-Conquering #Robot\nvia @WevolverApp\n \n#Innovation #EmergingTech #Tech ",
+        "engagement": 22,
+        "score": 0.323
+      },
+      {
+        "username": "DataChaz",
+        "text": "Cancel your plans RIGHT NOW.\n\nA new TED talk just dropped:\n@steipete walks through how he built @OpenClaw 👀\n\nbest 18 mi",
+        "engagement": 53,
+        "score": 0.318
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Meet the #Robot That Runs on Walls Like a Spider\nvia @ZappyZappy7\n \n#Robotics #Innovation #EmergingTech #Technology http",
+        "engagement": 12,
+        "score": 0.31
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Holodeck pioneer.\n\nGreat interview by @AnjneyMidha of @LumaLabsAI founder @gravicle.\n\nThe future of computing is discuss",
+        "engagement": 25,
+        "score": 0.292
+      },
+      {
+        "username": "bamitav",
+        "text": "Claude Is Now Coming After The Stock Markets!? 😱\n https://t.co/WHqB2GkPE5 via @YouTube\n\n#claude #ArtificialIntelligence",
+        "engagement": 9,
+        "score": 0.288
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "A Smarter Prosthetic: Esper Bionics’ #AI Hand Learns from Everyday Use\nby @EsperBionics\n\n#EmergingTech #Technology #Inno",
+        "engagement": 11,
+        "score": 0.284
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Alex Finn, @AlexFinn, says OpenClaw running on the cloud is a scam: \n\nhttps://t.co/mGrteVR3oq \n\nWhile he is right in a p",
+        "engagement": 44,
+        "score": 0.279
+      },
+      {
+        "username": "Scobleizer",
+        "text": "It is worth 18 minutes indeed.",
+        "engagement": 83,
+        "score": 0.271
+      },
+      {
+        "username": "GaryMarcus",
+        "text": "Everyone’s quitting but everything’s going great. AGI will be here next week. Scout’s honor!",
+        "engagement": 163,
+        "score": 0.261
+      },
+      {
+        "username": "Scobleizer",
+        "text": "I'm a slow learner. And a minor in economics. \n\nI interviewed @VitalikButerin back when he was just starting. He develop",
+        "engagement": 166,
+        "score": 0.26
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Droidup #Robotics Unveils Moya, a Next-Gen Lifelike Humanoid\nby @CyberRobooo\n  \n#AI #Robots #MachineLearning #Artificial",
+        "engagement": 19,
+        "score": 0.259
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Revolutionizing #Robotics: Four-Manipulator Wheeled Humanoid for Complex Tasks\nvia @ZappyZappy7\n  \n#AI #Robots #Emerging",
+        "engagement": 31,
+        "score": 0.255
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Best advice: do your own homework.\n\nEven better advice? \n\nHave your AI read all of X and do the homework for you. \n\nI di",
+        "engagement": 39,
+        "score": 0.253
+      },
+      {
+        "username": "Scobleizer",
+        "text": "If you want to watch the weather, I have a list for you: https://t.co/VJ80K1PTy0\n\nPut it into @Pokee_AI (or your favorit",
+        "engagement": 28,
+        "score": 0.252
+      },
+      {
+        "username": "Scobleizer",
+        "text": "AI says: \"I highly recommend watching the full video on X. It’s one of the clearest explanations I’ve seen of how Web3 i",
+        "engagement": 35,
+        "score": 0.252
+      },
+      {
+        "username": "Scobleizer",
+        "text": "The future of work looks like this. \n\nExcept without the 2D interfaces. :-)",
+        "engagement": 34,
+        "score": 0.251
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "Reconfigurable Variable Topology Truss #Robot Walks and Rolls in Pyramid Formation\nby @IntEngineering\n  \n#Robotics #Arti",
+        "engagement": 22,
+        "score": 0.248
+      },
+      {
+        "username": "Scobleizer",
+        "text": "This is evidence of a new \"headless\" Web being developed by the nerds. \n\nA Web just for people's agents to come and visi",
+        "engagement": 128,
+        "score": 0.246
+      },
+      {
+        "username": "randal_olson",
+        "text": "How laughter is written across the Americas: hahaha in English-speaking North America, jajaja across Spanish-speaking co",
+        "engagement": 11,
+        "score": 0.242
+      },
+      {
+        "username": "bamitav",
+        "text": "Why China Can't Copy ASML?\n https://t.co/A0c2vGrU8i via @YouTube\n\n#microprosessor #chip #ASML #tech #semiconductor \n\n@so",
+        "engagement": 10,
+        "score": 0.238
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "How to #Automate Your #Warehouse with #Robotics\nby @antgrasso\n \n#Robots #RPA #ArtificialIntelligence #Innovation #Techno",
+        "engagement": 17,
+        "score": 0.235
+      },
+      {
+        "username": "Ronald_vanLoon",
+        "text": "15 Types of Cyber Attacks\nby @ingliguori\n\n#CyberSecurity #Infosec #IT #Technology https://t.co/AOLjzxnoAJ",
+        "engagement": 22,
+        "score": 0.229
+      },
+      {
+        "username": "antgrasso",
+        "text": "IT delivery is moving toward human–AI integration. With 75% of work augmented and 25% automated by 2030, leaders must re",
+        "engagement": 112,
+        "score": 0.221
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Web 3 and AI mix.\n\nMeet the guys who are bringing your AI Agents the ability to run their own business: @eigencloud\n\nCon",
+        "engagement": 110,
+        "score": 0.216
+      },
+      {
+        "username": "Scobleizer",
+        "text": "Theo destroys Opus 4.7.",
+        "engagement": 243,
+        "score": 0.212
+      }
+    ]
+  },
+  "analysisB": {
+    "listName": "Curated (50 accounts)",
+    "totalAccounts": 50,
+    "activeAccounts": 21,
+    "silentAccounts": 29,
+    "silentAccountsList": [
+      "mattshumer_",
+      "chipro",
+      "eugeneyan",
+      "sama",
+      "CadeMetz",
+      "kaifulee",
+      "vinod1975",
+      "erikbryn",
+      "jackclark",
+      "etzioni",
+      "karpathy",
+      "ylecun",
+      "demishassabis",
+      "geoffreyhinton",
+      "drfeifei",
+      "AndrewYNg",
+      "goodfellow_ian",
+      "rodneyabrooks",
+      "katecrawford",
+      "ID_AA_Carmack",
+      "timnitgebru",
+      "lexfridman",
+      "AnthropicAI",
+      "GoogleDeepMind",
+      "grok_",
+      "paulroetzer",
+      "mfordfuture",
+      "jeffdean",
+      "elaborbot"
+    ],
+    "totalTweets": 92,
+    "tweetsPerActiveAccount": "4.4",
+    "highSignalTweets": 77,
+    "signalDensity": "83.7%",
+    "avgEngagement": 663,
+    "medianEngagement": 174,
+    "topByVolume": [
+      [
+        "garrytan",
+        28
+      ],
+      [
+        "datachaz",
+        11
+      ],
+      [
+        "emollick",
+        9
+      ],
+      [
+        "paulg",
+        8
+      ],
+      [
+        "jxnlco",
+        7
+      ],
+      [
+        "_akhaliq",
+        4
+      ],
+      [
+        "swyx",
+        3
+      ],
+      [
+        "garymarcus",
+        3
+      ],
+      [
+        "hwchase17",
+        2
+      ],
+      [
+        "simonw",
+        2
+      ]
+    ],
+    "top50UniqueAuthors": 14,
+    "top50AuthorList": [
+      "paulg",
+      "datachaz",
+      "hwchase17",
+      "garrytan",
+      "fchollet",
+      "emollick",
+      "bilawalsidhu",
+      "simonw",
+      "jeremyphoward",
+      "garymarcus",
+      "jxnlco",
+      "alexalbert__",
+      "swyx",
+      "_akhaliq"
+    ],
+    "top50Tweets": [
+      {
+        "username": "paulg",
+        "text": "In fact programming is particularly good at teaching you how to think. Programs are literally built out of ideas. Which ",
+        "engagement": 8227,
+        "score": 0.623
+      },
+      {
+        "username": "paulg",
+        "text": "There's never been an investment like the investment in railroads. (This graph has a log scale!) https://t.co/nM7VrNWuos",
+        "engagement": 7535,
+        "score": 0.574
+      },
+      {
+        "username": "DataChaz",
+        "text": "opus 4.7 has reached AGI https://t.co/jROJyzr1pz",
+        "engagement": 9,
+        "score": 0.45
+      },
+      {
+        "username": "DataChaz",
+        "text": "Absolute gold advice from Claude Opus 4.7 (left)… still processing whatever Gemini (right) is recommending 😁 https://t.",
+        "engagement": 14,
+        "score": 0.447
+      },
+      {
+        "username": "hwchase17",
+        "text": "so hes building a harness",
+        "engagement": 31,
+        "score": 0.446
+      },
+      {
+        "username": "garrytan",
+        "text": "Using OpenClaw is basically is like driving your own Ferrari (that you have to be a mechanic for yourself) and it's brok",
+        "engagement": 1836,
+        "score": 0.431
+      },
+      {
+        "username": "DataChaz",
+        "text": "🚨 This is absolute GOLD.\n\nThe @AnthropicAI engineer who literally wrote \"Building Effective Agents\" just dropped a 14-m",
+        "engagement": 4358,
+        "score": 0.421
+      },
+      {
+        "username": "paulg",
+        "text": "The watchmaker hands a watch back to me, having determined that it can't be repaired:\n\nWatchmaker: My advice is to sell ",
+        "engagement": 4880,
+        "score": 0.413
+      },
+      {
+        "username": "paulg",
+        "text": "\"Ron discovered how to be the investor of the future by accident. He didn't foresee the future of startup investing, rea",
+        "engagement": 311,
+        "score": 0.385
+      },
+      {
+        "username": "fchollet",
+        "text": "Constraints are the catalyst of invention. An infinite search space leads to paralysis. The most creative inventions hap",
+        "engagement": 44,
+        "score": 0.384
+      },
+      {
+        "username": "garrytan",
+        "text": "FYI this is not me do not trust it https://t.co/IcnstkTxXI",
+        "engagement": 94,
+        "score": 0.38
+      },
+      {
+        "username": "emollick",
+        "text": "One thing thing about AI, for better and worse, is that \"everything around me is somebody's life work\" is no longer a tr",
+        "engagement": 1355,
+        "score": 0.378
+      },
+      {
+        "username": "garrytan",
+        "text": "This should work for everything \n\nWould be so awesome",
+        "engagement": 116,
+        "score": 0.37
+      },
+      {
+        "username": "garrytan",
+        "text": "Launching GBrain v0.12 with a self-wiring knowledge graph is now available\n\n5% better precision\n11% better recall\n28% be",
+        "engagement": 183,
+        "score": 0.361
+      },
+      {
+        "username": "garrytan",
+        "text": "Now launching GBrain v0.11 with Minions\n\nI got sick of OpenClaw's subagents timing out and not getting things done\n\nSo I",
+        "engagement": 431,
+        "score": 0.359
+      },
+      {
+        "username": "DataChaz",
+        "text": "Cancel your plans RIGHT NOW.\n\nA new TED talk just dropped:\n@steipete walks through how he built @OpenClaw 👀\n\nbest 18 mi",
+        "engagement": 53,
+        "score": 0.345
+      },
+      {
+        "username": "garrytan",
+        "text": "GStack is now at v1.0 General Release\n\nIf you used it before and didn't like how chatty it was, we've fixed it. Thanks @",
+        "engagement": 71,
+        "score": 0.343
+      },
+      {
+        "username": "bilawalsidhu",
+        "text": "A few weeks ago @steipete told me he was thinking about canceling his TED talk. Too busy. No time to prep. Working on Op",
+        "engagement": 1150,
+        "score": 0.339
+      },
+      {
+        "username": "garrytan",
+        "text": "Literally can count the hours I have lost as OpenClaw decides to do brain surgery on itself and then ends up dying from ",
+        "engagement": 781,
+        "score": 0.337
+      },
+      {
+        "username": "garrytan",
+        "text": "I don't understand all these people using their real name to be an asshole to me\n\nI've been committing every day and I a",
+        "engagement": 1211,
+        "score": 0.334
+      },
+      {
+        "username": "garrytan",
+        "text": "GStack is now v1.0.0. \n\nAnd yes, I swapped using LOC for logical SLOC, and the wild thing is the functional increase in ",
+        "engagement": 261,
+        "score": 0.326
+      },
+      {
+        "username": "garrytan",
+        "text": "https://t.co/vOX6oDf5jr",
+        "engagement": 174,
+        "score": 0.325
+      },
+      {
+        "username": "emollick",
+        "text": "A major lesson to take away from Opus 4.7 is that, while there is a lot of arguments about implementation choices and pe",
+        "engagement": 420,
+        "score": 0.317
+      },
+      {
+        "username": "simonw",
+        "text": "Join us at PyCon US 2026 in Long Beach—we have new AI and security tracks this year\nhttps://t.co/ZVHmSlVYEP",
+        "engagement": 32,
+        "score": 0.311
+      },
+      {
+        "username": "simonw",
+        "text": "Is there still a widespread belief that LLMs and coding agents are good for greenfield development but don't help for ma",
+        "engagement": 1154,
+        "score": 0.307
+      },
+      {
+        "username": "paulg",
+        "text": "The future is already here, but thanks to unions it's not evenly distributed.",
+        "engagement": 3096,
+        "score": 0.304
+      },
+      {
+        "username": "garrytan",
+        "text": "\"It's just markdown files\" \n\nDude anyone who believes this hasn't built agentic software yet",
+        "engagement": 260,
+        "score": 0.303
+      },
+      {
+        "username": "emollick",
+        "text": "I think Artificial Analysis does a good job overall and provides transparency in benchmarking, but GDPval-AA is not a go",
+        "engagement": 238,
+        "score": 0.299
+      },
+      {
+        "username": "emollick",
+        "text": "One of the premier journals in my field...\n\nI think there are very valid reasons to set rules on AI in peer review (incl",
+        "engagement": 123,
+        "score": 0.297
+      },
+      {
+        "username": "jeremyphoward",
+        "text": "Wow I can already say after just 5 hours using @AnthropicAI Opus 4.7 that this is the first model that \"gets\" what I'm d",
+        "engagement": 1696,
+        "score": 0.287
+      },
+      {
+        "username": "jeremyphoward",
+        "text": "You gotta pump those numbers up.\nThose are rookie numbers in this racket. https://t.co/f2TaEy8NIo",
+        "engagement": 84,
+        "score": 0.276
+      },
+      {
+        "username": "garrytan",
+        "text": "Must watch. OpenClaw is a revelation. https://t.co/LKpjROtIya",
+        "engagement": 809,
+        "score": 0.26
+      },
+      {
+        "username": "paulg",
+        "text": "One danger of working just hard enough to get by is that you tend not to leave much margin for error when you do that. I",
+        "engagement": 2259,
+        "score": 0.253
+      },
+      {
+        "username": "GaryMarcus",
+        "text": "“my honest read is that a significant portion of this spending is driven by competitive fear rather than demonstrated re",
+        "engagement": 200,
+        "score": 0.251
+      },
+      {
+        "username": "garrytan",
+        "text": "The future is MCP/CLI",
+        "engagement": 2134,
+        "score": 0.242
+      },
+      {
+        "username": "jxnlco",
+        "text": "me: how to angel invest, so you can lose all your money",
+        "engagement": 58,
+        "score": 0.241
+      },
+      {
+        "username": "hwchase17",
+        "text": "Fastest way to deploy deepagents gets even more powerful",
+        "engagement": 44,
+        "score": 0.241
+      },
+      {
+        "username": "paulg",
+        "text": "Massie is working late to protect you.",
+        "engagement": 1977,
+        "score": 0.236
+      },
+      {
+        "username": "alexalbert__",
+        "text": "A lot of bugs that folks may have hit yesterday when first trying Opus 4.7 are now fixed. Thanks for bearing with us🙏",
+        "engagement": 1330,
+        "score": 0.229
+      },
+      {
+        "username": "garrytan",
+        "text": "There is no proper eval for personal brains on OpenClaw and Hermes Agent\n\nIf someone wants to build this, this would be ",
+        "engagement": 292,
+        "score": 0.229
+      },
+      {
+        "username": "emollick",
+        "text": "I'll give Anthropic credit for moving quickly. Opus 4.7 Adaptive Thinking now triggers thinking much more often, includi",
+        "engagement": 1041,
+        "score": 0.227
+      },
+      {
+        "username": "garrytan",
+        "text": "OpenClaw is straight magic",
+        "engagement": 153,
+        "score": 0.225
+      },
+      {
+        "username": "garrytan",
+        "text": "I like big scopes and I cannot lie",
+        "engagement": 160,
+        "score": 0.224
+      },
+      {
+        "username": "jxnlco",
+        "text": "codex for open source\n\nif you were invited to redeem a ChatGPT Pro promo code through the Codex for Open Source Program ",
+        "engagement": 90,
+        "score": 0.222
+      },
+      {
+        "username": "garrytan",
+        "text": "The ultimate \"they don't know\" alpha leak here 👇",
+        "engagement": 94,
+        "score": 0.221
+      },
+      {
+        "username": "swyx",
+        "text": "grateful to @steipete for prompting me to start the AMA with “what’s the future of ClosedClaw”? 😈 https://t.co/4s9SkNTE",
+        "engagement": 26,
+        "score": 0.22
+      },
+      {
+        "username": "emollick",
+        "text": "With max thinking Opus 4.7 is quite impressive, with a real sense of style\n\nIn two prompts: \"implement the Tower of Babe",
+        "engagement": 868,
+        "score": 0.217
+      },
+      {
+        "username": "_akhaliq",
+        "text": "UniDoc-RL\n\nCoarse-to-Fine Visual RAG with Hierarchical Actions and Dense Rewards\n\npaper: https://t.co/gIBNWR2fQI https:/",
+        "engagement": 23,
+        "score": 0.205
+      },
+      {
+        "username": "swyx",
+        "text": "china discount is real, damn https://t.co/tyQpMtEzPS",
+        "engagement": 136,
+        "score": 0.204
+      },
+      {
+        "username": "_akhaliq",
+        "text": "DR3-Eval\n\nTowards Realistic and Reproducible Deep Research Evaluation\n\npaper: https://t.co/PM4ppcgdJ3 https://t.co/BYeBP",
+        "engagement": 34,
+        "score": 0.202
+      }
+    ]
+  },
+  "timestamp": "2026-04-18T15-17-49-040Z",
+  "sinceDate": "2026-04-17"
+}

@@ -1,0 +1,81 @@
+<div style="max-width: 800px; margin: 0 auto; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #24292e; line-height: 1.5; padding-bottom: 50px;">
+
+  <div style="background-color: #1a1a2e; color: #ffffff; padding: 20px; text-align: center;">
+    <h1 style="margin: 0; font-size: 24px;">🐦 Twitter AI Intelligence Brief</h1>
+    <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.8;">April 18, 2026 | Technical Scout Analysis</p>
+  </div>
+
+  <div style="padding: 20px;">
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; border-radius: 6px; padding: 20px; margin-bottom: 25px;">
+      <h2 style="margin-top: 0; font-size: 18px;">Executive Synthesis</h2>
+      <ul style="margin-bottom: 0; padding-left: 20px;">
+        <li style="margin-bottom: 10px;"><strong>The "Harness" Era:</strong> Founders must shift from building "naked" LLM wrappers to deterministic "harnesses" (OpenClaw/GBrain) that use job queues and structured memory to manage agentic reliability.</li>
+        <li style="margin-bottom: 10px;"><strong>60-Day Capability Sprints:</strong> With major model updates like Opus 4.7 arriving every two months, technical debt is the primary risk; architectures must remain model-agnostic to survive the rapid replacement of "life's work" by native model features.</li>
+        <li style="margin-bottom: 0;"><strong>Granular Talent Signaling:</strong> As the field matures, hiring filters are shifting from general "AI experience" to specific framework mastery (JAX vs. PyTorch) and the ability to build "fat skills" (structured markdown instructions) rather than just prompt engineering.</li>
+      </ul>
+    </div>
+
+    <div style="display: inline-block; background-color: #1a1a2e; color: #ffffff; border-radius: 20px; padding: 5px 15px; font-size: 13px; font-weight: bold; text-transform: uppercase; margin-top: 25px;">Pillar 1: 🚀 Tools & Products</div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">Anthropic Opus 4.7 Release</h3>
+      <p><strong>Technical Design:</strong> A major iterative update to the Opus series focusing on "alignment" and task-specific logic. It moves away from the friction-heavy reasoning of v4.6 toward a model that better anticipates user intent during complex workflows.</p>
+      <p><strong>Why it Matters:</strong> This release signals a 60-day improvement cycle. Founders should evaluate if their custom "middle-layer" logic is being rendered obsolete by these rapid native model improvements in reasoning and alignment.</p>
+      <p><strong>Stack:</strong> Anthropic API, Claude Code, Opus 4.7.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/jeremyphoward/status/2044942799511191559" style="color: #0366d6; text-decoration: none;">Jeremy Howard</a>, <a href="https://x.com/alexalbert__/status/2045159041283064095" style="color: #0366d6; text-decoration: none;">Alex Albert</a>, <a href="https://x.com/emollick/status/2045314251804324080" style="color: #0366d6; text-decoration: none;">Ethan Mollick</a></p>
+    </div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">Agentic Harnesses (OpenClaw & GBrain)</h3>
+      <p><strong>Technical Design:</strong> Rather than letting an LLM run "naked," this architecture uses a deterministic "harness." It incorporates a queue/jobs system (BullMQ) to handle sub-agent timeouts and a self-wiring knowledge graph for persistent memory.</p>
+      <p><strong>Why it Matters:</strong> Reliability is the "Ferrari vs. Honda" problem. Founders building agents should stop focusing on the model and start building the "mechanic" (the harness) that prevents agents from "doing brain surgery on themselves" and crashing.</p>
+      <p><strong>Stack:</strong> Postgres/PGLite, BullMQ, OpenClaw, Hermes Agent.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/garrytan/status/2045410656493691069" style="color: #0366d6; text-decoration: none;">Garry Tan</a>, <a href="https://x.com/bilawalsidhu/status/2045291456630509709" style="color: #0366d6; text-decoration: none;">Bilawal Sidhu</a>, <a href="https://x.com/hwchase17/status/2045479338917683671" style="color: #0366d6; text-decoration: none;">Harrison Chase</a></p>
+    </div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">Claude "Fat Skills" & Design</h3>
+      <p><strong>Technical Design:</strong> A shift toward "fat skills"—highly structured markdown files that act as deterministic instruction sets for models. This allows non-designers to produce high-quality UI/UX by following a standardized "blueprint" of capabilities.</p>
+      <p><strong>Why it Matters:</strong> This democratizes high-end design and threatens established incumbents (e.g., Figma). Founders can now lean on smaller teams for high-fidelity prototyping by utilizing these standardized "skill" guides.</p>
+      <p><strong>Stack:</strong> Claude Design, Anthropic Skills Guide.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/DataChaz/status/2045524286287269902" style="color: #0366d6; text-decoration: none;">Charly Wargnier</a>, <a href="https://x.com/alexalbert__/status/2045165630421364853" style="color: #0366d6; text-decoration: none;">Alex Albert</a></p>
+    </div>
+
+    <div style="display: inline-block; background-color: #1a1a2e; color: #ffffff; border-radius: 20px; padding: 5px 15px; font-size: 13px; font-weight: bold; text-transform: uppercase; margin-top: 25px;">Pillar 2: 📊 Industry Intelligence</div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">The JAX vs. PyTorch Talent Signal</h3>
+      <p><strong>Technical Design:</strong> PyTorch is the industry standard for general deep learning, but JAX is increasingly associated with high-performance, frontier-level research and optimization. The choice of framework indicates a candidate's depth of understanding regarding hardware acceleration.</p>
+      <p><strong>Why it Matters:</strong> For founders hiring their first AI engineers, "JAX" on a resume is becoming a high-signal filter for top-tier talent, whereas "PyTorch" is now considered the baseline for "mediocre" or standard candidates.</p>
+      <p><strong>Trajectory:</strong> Shift from generalist AI engineers to high-performance optimization specialists.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/fchollet/status/2045524796298101077" style="color: #0366d6; text-decoration: none;">François Chollet</a></p>
+    </div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">Frontier Labs vs. Startup Commercialization</h3>
+      <p><strong>Technical Design:</strong> Frontier labs (OpenAI, Anthropic) are increasingly building their own commercialization teams, moving up the stack into applications that were previously the domain of startups.</p>
+      <p><strong>Why it Matters:</strong> Founders are now in a direct race against the "commercialization folks" at the labs. The winning strategy is to focus on niche, high-context execution that labs are too "awkward" or broad to handle.</p>
+      <p><strong>Trajectory:</strong> Increased vertical competition between model providers and application builders.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/garrytan/status/2045241636880617629" style="color: #0366d6; text-decoration: none;">Garry Tan</a></p>
+    </div>
+
+    <div style="display: inline-block; background-color: #1a1a2e; color: #ffffff; border-radius: 20px; padding: 5px 15px; font-size: 13px; font-weight: bold; text-transform: uppercase; margin-top: 25px;">Pillar 3: 🔬 Research & Discoveries</div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">OpenAI Life Sciences Series</h3>
+      <p><strong>Technical Design:</strong> A specialized model series trained specifically for biology, drug discovery, and translational medicine. It moves beyond general reasoning into autonomous lab workflow management.</p>
+      <p><strong>Why it Matters:</strong> For founders in HealthTech or BioTech, the "general model" era is over. You must now decide whether to build on these specialized vertical models or risk being outperformed by those who do.</p>
+      <p><strong>Capabilities/Constraints:</strong> High precision in biological research; requires careful deployment due to biosecurity responsibilities.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/OpenAI/status/2044938017530577210" style="color: #0366d6; text-decoration: none;">OpenAI</a></p>
+    </div>
+
+    <div style="background-color: #ffffff; border: 1px solid #e1e4e8; padding: 15px; margin: 12px 0;">
+      <h3 style="margin-top: 0; font-size: 16px; font-weight: bold;">The 60-Day Model Improvement Law</h3>
+      <p><strong>Technical Design:</strong> Empirical evidence from the Opus 4.6 to 4.7 transition shows measurable improvements on "economically important tasks" every two months, regardless of implementation debates.</p>
+      <p><strong>Why it Matters:</strong> Founders must assume that any "hard" technical problem they solve today via complex prompting or RAG might be solved natively by a model update in 8 weeks. Build for the "next" model, not the current one.</p>
+      <p><strong>Capabilities/Constraints:</strong> Rapidly diminishing returns on custom "personality" or "implementation" hacks as base models improve.</p>
+      <p style="font-size: 13px; color: #586069; margin-bottom: 0;">Source: <a href="https://x.com/emollick/status/2045314251804324080" style="color: #0366d6; text-decoration: none;">Ethan Mollick</a></p>
+    </div>
+
+  </div>
+</div>

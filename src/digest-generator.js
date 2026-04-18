@@ -13,6 +13,20 @@ const {
 
 /**
  * Build the prompt for Gemini.
+ *
+ * Prompt design: "Middle register" — simplify the grammar, not the ideas.
+ * Tested as Prompt F during A/B testing (2026-04-18). See ab-test-prompt.js
+ * for the full history of prompt variants (A-F) and design rationale.
+ *
+ * Key principles:
+ * - Thesis-first cards (BLUF): bold thesis opens each card, no labels
+ * - Middle-register language: short sentences, concrete subjects, active
+ *   verbs, precise distinctions — no jargon, no metaphors, no sweeping claims
+ * - Inverted pyramid: KEY INSIGHTS up top, then 5-7 cards across 3 pillars
+ * - Gmail-safe: all styles inline, 600px container
+ *
+ * To iterate on this prompt, use ab-test-prompt.js to generate side-by-side
+ * comparisons before modifying this file.
  */
 function buildPrompt(topTweets, dateString) {
   const data = topTweets.map(t => ({
@@ -24,89 +38,116 @@ function buildPrompt(topTweets, dateString) {
     metrics: t.metrics
   }));
 
-  return `You are a Senior AI Systems Architect and Technical Scout.
-Task: Analyze the following ${data.length} tweets from top AI leaders.
+  const totalTweets = data.length;
+  const uniqueAuthors = new Set(data.map(t => t.authorName)).size;
 
-AUDIENCE: Seed-to-Series-A software founders who are non-technical.
-They need to stay informed on AI developments that affect their
-decisions — hiring, vendor choice, build/buy, technical risk, and
-market timing.
+  return `You are writing a daily intelligence briefing for startup founders.
+
+Task: Analyze ${totalTweets} tweets from AI leaders. Produce a brief that a founder reads in 2-3 minutes and walks away understanding something they didn't before.
+
+AUDIENCE: Seed-to-Series-A software founders. Smart, busy, not AI researchers. They care about: what to build, who to hire, what to buy, when to move.
+
+VOICE & LANGUAGE:
+Your goal is to make complex ideas easy to read WITHOUT losing their precision. Follow these rules:
+
+1. SIMPLIFY THE GRAMMAR, NOT THE IDEAS. A sophisticated insight expressed in two short sentences is better than the same insight crammed into one long sentence with nested clauses.
+
+2. Use concrete subjects and active verbs. "Anthropic launched Claude Design" not "Anthropic's entry into design via Claude Design demonstrates..."
+
+3. Break compound sentences into two. If a sentence has a comma followed by a dependent clause, split it.
+
+4. Stay precise. Do not make sweeping generalizations or dramatic claims that go beyond what the source tweets actually say. "Anthropic launched a design tool, putting it in competition with Figma" is precise. "The companies building AI are coming for the apps that use AI" is dramatic and unverifiable.
+
+5. When explaining WHY something matters, be specific about the distinction. Don't collapse nuance into vague language.
+   BAD (too dense): "Engineering seniority in AI is now defined by JAX proficiency, signaling a shift from implementation to deep architectural understanding."
+   BAD (too vague): "When hiring AI engineers, look for JAX on their resume. It's the clearest sign someone understands how models actually work under the hood."
+   GOOD (clear and precise): "JAX experience is becoming a stronger hiring signal than PyTorch for senior AI roles. The distinction matters: PyTorch shows someone can use existing models, JAX shows they can optimize and build new ones."
+
+6. No metaphors or analogies. No jargon without a brief inline explanation. No hedging ("it seems", "arguably"). No filler ("it's worth noting", "interestingly").
 
 ---
 
-PILLARS:
-- Pillar 1: 🚀 Tools & Products (Technical design, why it matters, stack)
-- Pillar 2: 📊 Industry Intelligence (Trends, market shifts, trajectory)
-- Pillar 3: 🔬 Research & Discoveries (Papers, core discoveries,
-  capabilities/constraints)
+STRUCTURE:
 
----
+SECTION 1 — KEY INSIGHTS
+3 statements. Each must:
+- Be 1-2 SHORT sentences that deliver a specific, precise insight
+- State a conclusion supported by the tweet data (not a sweeping generalization)
+- Explain the specific distinction or non-obvious connection that makes this worth knowing
+- 15-30 words total
 
-STEP 1 — TRIAGE (internal reasoning, do not output):
-Review all ${data.length} tweets. For each pillar, rank the top 5
-candidate topics by FOUNDER ACTIONABILITY: "Would a seed-to-Series-A
-software founder change a decision this week based on this?"
-- If multiple tweets cover the same underlying story, merge them
-  into one candidate and note all sources.
-- If a topic is niche to hardware, academia-only, or has no
-  near-term product implication, drop it.
+SECTION 2 — BRIEFING CARDS (5-7 total)
+Organize under 3 pillars:
+- 🚀 Tools & Products
+- 📊 Industry Moves
+- 🔬 Research Worth Knowing
+1-3 cards per pillar.
 
-STEP 2 — SELECT:
-Pick the top 2-3 candidates per pillar. You must have at least 2
-and no more than 3 cards per pillar. Total output: 6-9 cards across
-all pillars.
+Each card has NO LABELS. Instead:
 
-STEP 3 — EXECUTIVE SUMMARY:
-Write exactly 3 synthesis points. Each MUST correspond to at least
-one card in the body. Frame each as a trend with a clear implication
-for a founder, not just a topic label.
+First line (bold): A thesis statement — what happened and why it matters. 1-2 sentences, concrete and precise. This is the card's headline and insight combined.
 
-STEP 4 — WRITE CARDS:
-For each selected candidate, write one card with the following
-fields:
-- Topic: A short, descriptive title for the card (e.g. "LiteLLM
-  Supply Chain Breach", "Federal Preemption of AI Regulation").
-- Technical Design: Explain the architecture in simple terms.
-  Prioritize HOW it works over WHAT it is.
-- Why it Matters: One concrete implication for a founder's
-  decisions (hiring, vendor choice, build/buy, risk mitigation,
-  or market timing).
-- Stack (Pillar 1 only) / Trajectory (Pillar 2 only) /
-  Capabilities/Constraints (Pillar 3 only).
-- Source: All contributing tweet authors (display names, not
-  handles), hyperlinked to the tweet URL.
+Second paragraph: 2-3 supporting sentences. Evidence, context, what specifically changed. Written as flowing prose with short sentences. Include concrete details (names, numbers, specific differences).
+
+Source line: Author names hyperlinked to tweets, prefixed with "via".
+
+SECTION 3 — FOOTER
+"${totalTweets} tweets · ${uniqueAuthors} sources · ${dateString}"
 
 ---
 
 OUTPUT FORMAT:
-- Raw HTML only. No markdown fences. Start directly with the
-  opening div.
-- HEADER_DATE: Use "${dateString}" as the date in the header.
+Raw HTML only. No markdown fences. Start directly with the opening div.
+All styles must be inline (Gmail strips <style> tags).
 
 HTML DESIGN:
-- Container: max-width 800px, centered, light background (#f8f9fa).
-- Header: Dark navy (#1a1a2e) full-width banner, white text,
-  centered. Title: "🐦 Twitter AI Intelligence Brief". Subtitle:
-  HEADER_DATE + "Technical Scout Analysis".
-- Executive Summary: White card with light border, labeled
-  "Executive Synthesis". Use a <ul> for the 3 points.
-- Pillar headers: Rendered as compact colored pill/badge
-  (dark navy background, white text, inline-block, rounded
-  corners, padding 5px 15px, font-size 13px, uppercase,
-  margin-top 25px). NOT full-width bars.
-- Cards: White background, 1px solid border (#e1e4e8), padding
-  15px, margin 12px 0. No colored backgrounds on cards.
-- Card Topic title: Rendered as a bold <h3> (font-size 16px,
-  margin-top 0) at the top of each card, before Technical Design.
-- Card fields: "Technical Design:", "Why it Matters:", "Stack:"
-  / "Trajectory:" / "Capabilities/Constraints:" each in their
-  own <p> tag with the label in <strong>.
-- Source line: Smaller font (font-size 13px, color #586069).
-  "Source: " followed by hyperlinked authorName. Link color
-  #0366d6.
-- Typography: System font stack (-apple-system, BlinkMacSystemFont,
-  'Segoe UI', Roboto, Helvetica, Arial, sans-serif). Body text
-  color #24292e. Line-height 1.5.
+
+Container:
+- max-width: 600px, margin: 0 auto, padding: 16px
+- background: #ffffff
+- font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif
+- color: #1a1a1a, line-height: 1.6
+
+Header:
+- Left-aligned, no banner
+- Title: "AI Intelligence Brief" in bold, font-size 20px, color #1a1a2e
+- Subtitle: "${dateString}" in font-size 13px, color #6b7280
+- Bottom border: 1px solid #e5e7eb, padding-bottom 14px
+
+Key Insights section:
+- Section label: "KEY INSIGHTS" in font-size 11px, letter-spacing 1.5px, uppercase, color #6b7280, margin-top 20px, margin-bottom 10px
+- Use <ul> with no bullets (list-style: none, padding-left: 0)
+- Each <li>: font-size 15px, line-height 1.5, color #1a1a1a, margin-bottom 12px, padding-left 16px, border-left: 3px solid #2563eb
+
+Pillar Headers:
+- Compact pill: background #1a1a2e, color #fff, font-size 11px, uppercase, letter-spacing 1px, padding 4px 12px, border-radius 4px, display inline-block, margin-top 28px, margin-bottom 12px
+
+Cards:
+- White background (#ffffff), border: 1px solid #e8e8e8, border-radius: 6px
+- padding: 16px, margin: 10px 0 14px 0
+
+Card Thesis (first line):
+- font-size: 16px, font-weight: bold, color: #1a1a1a, line-height: 1.5
+- margin: 0 0 8px 0
+- Use a <p> tag, not a heading
+
+Card Body (supporting evidence):
+- font-size: 15px, color: #333333, line-height: 1.6
+- margin: 0 0 8px 0
+
+Card Source:
+- font-size: 12px, color: #9ca3af, margin: 0
+- Links: color #2563eb, text-decoration: none
+- Prefix "via " before the names
+
+Footer:
+- margin-top: 32px, padding-top: 16px, border-top: 1px solid #e5e7eb
+- font-size: 12px, color: #9ca3af, text-align: center
+
+---
+
+INTERNAL REASONING (do not output):
+For each topic, formulate the THESIS first — the specific, non-obvious conclusion. Then check: is this precise enough that someone could disagree with it? If it's so vague that no one could disagree, it's not an insight. Rewrite it with more specificity.
 
 Input Data:
 ${JSON.stringify(data, null, 2)}`;

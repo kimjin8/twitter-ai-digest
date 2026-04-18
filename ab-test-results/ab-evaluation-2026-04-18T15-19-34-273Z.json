@@ -1,0 +1,95 @@
+{
+  "list_a_scores": {
+    "signal_density": 4,
+    "pillar_balance": 5,
+    "source_diversity": 3,
+    "founder_actionability": 6,
+    "freshness_exclusivity": 5,
+    "noise_floor": 5,
+    "total": 28,
+    "commentary": "This list suffers from low signal density and poor source diversity, with a few accounts dominating the volume. While some actionable AI insights are present, a significant portion is generic tech news or irrelevant content, reducing its value for AI software founders."
+  },
+  "list_b_scores": {
+    "signal_density": 9,
+    "pillar_balance": 8,
+    "source_diversity": 4,
+    "founder_actionability": 9,
+    "freshness_exclusivity": 9,
+    "noise_floor": 7,
+    "total": 46,
+    "commentary": "This list boasts excellent signal density, freshness, and actionability, providing highly relevant insights for AI software founders. While still somewhat dominated by a few voices, the content quality and focus on practical AI development and strategy are superior."
+  },
+  "winner": "B",
+  "key_differences": [
+    "List B has significantly higher signal density (84.8% vs 39.0%), making it much more efficient for an AI digest.",
+    "List B provides more direct, real-time, and actionable insights for AI founders, focusing on building, strategy, and tool evaluation.",
+    "List B's content is more tightly focused on AI tools, agentic software, and strategic implications, whereas List A includes a lot of general 'Emerging Tech' and robotics news.",
+    "Both lists suffer from a few accounts dominating volume, but List B's dominant voices are more relevant and high-signal for the target audience."
+  ],
+  "recommended_changes": [
+    {
+      "action": "remove",
+      "handle": "@Ronald_vanLoon",
+      "reason": "High volume, but content is too generic 'Emerging Tech' and robotics, not specific enough for an AI intelligence digest for software founders."
+    },
+    {
+      "action": "remove",
+      "handle": "@Scobleizer",
+      "reason": "High volume, but content is often broad, visionary, or anecdotal, contributing to noise and diluting specific AI intelligence."
+    },
+    {
+      "action": "remove",
+      "handle": "@randal_olson",
+      "reason": "Irrelevant content (e.g., linguistics) for an AI intelligence digest."
+    },
+    {
+      "action": "remove",
+      "handle": "@waitin4agi_",
+      "reason": "Irrelevant content (e.g., generic social media advice)."
+    },
+    {
+      "action": "keep",
+      "handle": "@garrytan",
+      "reason": "Excellent source for AI product building, agentic software development, and founder insights."
+    },
+    {
+      "action": "keep",
+      "handle": "@DataChaz",
+      "reason": "Provides timely insights on new AI models, tools, and actionable resources like TED talks."
+    },
+    {
+      "action": "keep",
+      "handle": "@emollick",
+      "reason": "Offers valuable strategic perspectives on AI's impact on work and practical lessons from new models."
+    },
+    {
+      "action": "add",
+      "handle": "@antgrasso",
+      "reason": "Good for ML applications, human-AI integration, and cybersecurity insights relevant to founders (from List A)."
+    },
+    {
+      "action": "add",
+      "handle": "@ingliguori",
+      "reason": "Useful for understanding different LLM types and cybersecurity aspects (from List A)."
+    }
+  ],
+  "suggested_final_list": [
+    "@garrytan",
+    "@datachaz",
+    "@emollick",
+    "@paulg",
+    "@jxnlco",
+    "@_akhaliq",
+    "@swyx",
+    "@garymarcus",
+    "@hwchase17",
+    "@simonw",
+    "@fchollet",
+    "@bilawalsidhu",
+    "@jeremyphoward",
+    "@alexalbert__",
+    "@antgrasso",
+    "@ingliguori"
+  ],
+  "coverage_gaps": "Deep technical AI research (e.g., new model architectures, theoretical breakthroughs) is still somewhat underrepresented, especially from academic sources. More diverse perspectives from different AI sub-fields (e.g., specific vision, NLP, robotics *research* rather than general tech news) and global AI policy/regulation updates could also enhance the digest."
+}
