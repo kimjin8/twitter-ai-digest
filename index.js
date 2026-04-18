@@ -51,22 +51,25 @@ async function runWorkflow({ dryRun = false } = {}) {
   // Check if current client supports batched search (TwitterAPI.io)
   if (twitterClient.getLatestTweetsForBatch) {
     const batchSize = 10;
+    const batches = [];
     for (let i = 0; i < TWITTER_USERNAMES.length; i += batchSize) {
-      const batch = TWITTER_USERNAMES.slice(i, i + batchSize);
-      try {
-        const rawTweets = await twitterClient.getLatestTweetsForBatch(batch, last24h);
-        const parsed = parseTweets(rawTweets); 
-        allParsedTweets.push(...parsed);
-        
-        // Respect rate limits (Free tier: 1 req / 5s)
-        if (i + batchSize < TWITTER_USERNAMES.length) {
-          console.log(`   ⏳ Sleeping 5s to respect rate limits...`);
-          await new Promise(resolve => setTimeout(resolve, 5100));
-        }
-      } catch (err) {
-        console.error(`   ❌ Failed to process batch ${i/batchSize + 1}:`, err.message);
-      }
+      batches.push(TWITTER_USERNAMES.slice(i, i + batchSize));
     }
+
+    // Fire all batches in parallel (QPS limit: 20)
+    console.log(`   📦 Fetching ${batches.length} batches in parallel...`);
+    const results = await Promise.all(
+      batches.map(async (batch) => {
+        try {
+          const rawTweets = await twitterClient.getLatestTweetsForBatch(batch, last24h);
+          return parseTweets(rawTweets);
+        } catch (err) {
+          console.error(`   ❌ Batch failed:`, err.message);
+          return [];
+        }
+      })
+    );
+    allParsedTweets = results.flat();
   } else {
     // Fallback: Parallel fetch one by one (Official X API)
     const pLimit = (await import('p-limit')).default;
