@@ -40,13 +40,14 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 - Select only the **Top 50** tweets for the final synthesis.
 
 ### 4.4 AI Synthesis (Gemini 3 Flash)
-- **4-Step Pipeline:** Triage → Select → Executive Summary → Write Cards.
+- **Thesis-First, Middle-Register Prompt:** Each card leads with a bold thesis statement (BLUF format). Language follows a "simplify the grammar, not the ideas" principle — short sentences, concrete subjects, active verbs, precise distinctions.
 - **Founder Actionability Filter:** Topics ranked by "Would a founder change a decision this week?"
 - **Multi-Pillar Analysis:** Categorize news into:
-    1. 🚀 Tools & Products (Technical Design, Stack)
-    2. 📊 Industry Intelligence (Trajectory, Market Shifts)
-    3. 🔬 Research & Discoveries (Papers, LLM constraints)
-- **Output:** 6-9 cards across pillars, each with Topic, Technical Design, Why it Matters, and Source.
+    1. 🚀 Tools & Products
+    2. 📊 Industry Moves
+    3. 🔬 Research Worth Knowing
+- **Output:** 5-7 cards across pillars. Each card: bold thesis (no labels), 2-3 supporting sentences, linked sources. Preceded by 3 KEY INSIGHTS at the top.
+- **Prompt Iteration Tooling:** `ab-test-prompt.js` generates side-by-side prompt variants as real Gmail emails for comparison. See prompt history (versions A-F) documented in that file.
 - **Three-Model Fallback:**
     - Primary: `gemini-3-flash-preview`
     - Fallback 1: `gemini-3.1-flash-lite-preview`
@@ -144,3 +145,67 @@ gcloud run jobs update twitter-ai-digest \
 - **Log Metric:** `twitter_digest_errors` (captures `❌` and `ERROR` severity).
 - **Alerting Policy:** `Twitter AI Digest - Errors Detected`.
 - **Primary Contact:** `your-email@example.com`
+
+---
+
+## 10. Backlog
+
+### 10.1 Autonomous Prompt Optimization
+
+**Problem:** Prompt quality degrades silently. The AI may produce dense language, vague insights, or poor pillar balance — and no one notices until a reader complains. Today, improving the prompt requires a human to manually run `ab-test-prompt.js`, read both emails, identify what's wrong, edit the prompt, and re-test. This is slow and infrequent.
+
+**Goal:** The system evaluates its own output against the [Evaluation Framework](EVALUATION_FRAMEWORK.md) after every run, identifies specific weaknesses, and proposes targeted prompt edits — creating a continuous improvement loop that requires human approval but not human diagnosis.
+
+**How it works:**
+
+1. **Score:** After generating the daily digest, a separate Gemini call scores the output against all six evaluation dimensions (Signal Density, Pillar Balance, Source Diversity, Founder Actionability, Freshness & Exclusivity, Noise Floor). Each dimension receives a 1-10 score with a one-sentence justification.
+2. **Diagnose:** If any dimension scores below 7, the system generates a specific diagnosis: what went wrong, which part of the prompt caused it, and a proposed edit. Example: "Pillar Balance scored 4/10 — all 6 cards are Tools & Products. The prompt says '1-3 cards per pillar' but doesn't enforce a minimum. Proposed fix: add 'Each pillar MUST have at least 1 card.'"
+3. **Propose:** The system writes a candidate prompt diff and generates a test digest using `ab-test-prompt.js`. Both the current and candidate outputs are scored.
+4. **Gate:** If the candidate scores higher on the weak dimension without regressing on others, the diff is staged for human review. No prompt changes are applied automatically.
+
+**Persistence:** All scores, diagnoses, and candidate diffs are saved to Firestore under `evaluations/{YYYY-MM-DD}` for trend tracking. A declining score trend across multiple days is a stronger signal than a single bad day.
+
+**Success criteria:**
+- Every daily run produces a scored evaluation (stored in Firestore)
+- Prompt improvements are proposed automatically when scores drop below threshold
+- No prompt change is applied without human approval
+- Average evaluation scores trend upward over 30-day windows
+
+**Dependencies:** Evaluation Framework (exists), `ab-test-prompt.js` (exists), Firestore persistence (exists).
+
+---
+
+### 10.2 Weekly & Monthly Synthesis
+
+**Problem:** The daily digest captures what happened today. But founders also need to understand what happened this week and this month — which trends are accelerating, which stories were one-day noise vs. sustained shifts, and how the landscape has changed over time. Currently, there is no way to answer "what were the three biggest AI developments this month?" without manually re-reading 30 daily emails.
+
+**Goal:** Produce weekly (every Sunday) and monthly (1st of each month) synthesis emails that aggregate daily tweet data from Firestore, identify recurring themes and sustained trends, and deliver a higher-altitude briefing that no single daily digest can provide.
+
+**How it works:**
+
+1. **Data source:** Query Firestore `runs/{YYYY-MM-DD}` for the target period (7 or 30 days). Each run document contains the top 50 scored tweets with full text, metrics, author, URL, and scores.
+2. **Deduplication:** The same story often appears across multiple days (e.g., a model launch on day 1, reactions on day 2, benchmarks on day 3). The synthesis must merge these into a single narrative arc, not repeat them.
+3. **Trend detection:** Identify topics or themes that appeared in 3+ daily digests within the period. These are sustained signals, not noise. Flag topics that appeared once and disappeared — they may be worth noting as "flash" events.
+4. **Synthesis:** A dedicated Gemini prompt (different from the daily prompt) produces a structured briefing:
+   - **Weekly:** "This Week in AI" — 5-7 stories that mattered, ranked by sustained impact. What changed from Monday to Friday.
+   - **Monthly:** "The AI Month" — 3-5 macro themes, each supported by specific events from the month. How the landscape shifted.
+5. **Delivery:** Sent as separate emails with distinct subject lines. Weekly on Sunday at 9:00 AM recipient's timezone. Monthly on the 1st.
+
+**Data requirements (see §10.2.1 below):** The current Firestore schema stores enough tweet-level data for re-synthesis. However, the daily generated HTML is not structured for programmatic extraction — the raw tweets are the correct input for weekly/monthly synthesis, not the daily email HTML.
+
+**Success criteria:**
+- Weekly email covers 7 days of data, identifies at least 2 sustained trends
+- Monthly email covers 30 days, identifies macro shifts vs. one-off events
+- No story is repeated verbatim from a daily digest — all content is re-synthesized at a higher altitude
+- Delivered on schedule via Cloud Scheduler
+
+**Dependencies:** Firestore daily persistence (exists), Cloud Scheduler (exists), new Gemini prompts (to build), new Cloud Scheduler triggers (to configure).
+
+#### 10.2.1 Data Readiness Assessment
+
+The current Firestore schema at `runs/{YYYY-MM-DD}` stores:
+- ✅ `top_tweets[]` with full `text`, `username`, `author_name`, `url`, `metrics`, `score`, `engagement_total` — sufficient for re-synthesis
+- ✅ `stats.filtered_tweet_count` and `stats.top_tweet_count` — useful for tracking pipeline health over time
+- ✅ `synthesis.model_used` — useful for debugging quality differences
+
+**No schema changes required.** The existing daily persistence captures enough raw signal to power weekly/monthly synthesis. The top-50 tweets per day (up to 350/week, 1500/month) are a manageable input size for Gemini's context window, especially after deduplication.

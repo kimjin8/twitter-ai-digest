@@ -6,7 +6,7 @@ An autonomous Node.js intelligence agent that transforms the noise of AI Twitter
 
 - **Cost-Optimized Datalake:** Powered by TwitterAPI.io with advanced batched searching to keep operating costs <$10/month.
 - **Noise-Free Signal:** Automated filters discard retweets, replies, and "thread-spam," focusing only on original impactful content.
-- **Multidimensional Synthesis:** Gemini 3 AI categorizes insights into *Tools & Products*, *Industry Trajectory*, and *Research*.
+- **Thesis-First Synthesis:** Gemini 3 AI produces a "middle register" briefing — short sentences carrying precise ideas, organized into *Tools & Products*, *Industry Moves*, and *Research Worth Knowing*.
 - **Premium Delivery:** Responsive HTML email briefings delivered directly to your inbox via Gmail API.
 - **Resilient Architecture:** Multi-model fallback chain (Gemini 3 → 3.1 → 2.5) and dual-API support (TwitterAPI.io + Official X API).
 - **Run Persistence:** Every pipeline run is saved to Firestore — including the top 50 ranked tweets, scores, generated HTML, and delivery status — for future ad-hoc analysis.
@@ -18,7 +18,7 @@ The pipeline follows a strict **Fetch → Parse → Score → Synthesize → Del
 1. **Orchestrator (`index.js`):** Manages the daily execution lifecycle.
 2. **Standardized Clients:** Modular drivers for different data sources.
 3. **The Scorer:** Engagement-weighted rankings to identify the top 50 most impactful updates.
-4. **The Synthesis Engine:** Custom prompt-engineering to prevent "AI laziness" and output structured intelligence.
+4. **The Synthesis Engine:** Thesis-first prompt design with middle-register language rules and before/after examples to ensure readable, precise output.
 5. **Firestore (`src/firestore.js`):** Persists each run to `runs/{YYYY-MM-DD}` for inspection and future AI-assisted evaluation.
 
 ## 🚀 Getting Started
@@ -41,6 +41,19 @@ npm run dry-run    # Test logic without sending email
 ```bash
 npm start          # Standard daily run
 ```
+
+### 4. Prompt Iteration (A/B Testing)
+```bash
+node ab-test-prompt.js   # Generate & email prompt variants for comparison
+```
+
+The prompt controls both content structure and HTML styling. To iterate:
+1. Add a new `buildPromptX()` function in `ab-test-prompt.js`
+2. Add it to the `variants` array in `main()`
+3. Run the script — each variant arrives as a separate email
+4. Compare in Gmail, then apply the winner to `src/digest-generator.js`
+
+See the prompt history (versions A-F) documented in `ab-test-prompt.js`.
 
 ---
 
