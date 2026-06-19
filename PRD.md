@@ -50,7 +50,7 @@ The **Twitter AI Intelligence Brief** is a standalone, AI-powered information sy
 - **Prompt Iteration Tooling:** `ab-test-prompt.js` generates side-by-side prompt variants as real Gmail emails for comparison. See prompt history (versions A-F) documented in that file.
 - **Three-Model Fallback:**
     - Primary: `gemini-3-flash-preview`
-    - Fallback 1: `gemini-3.1-flash-lite-preview`
+    - Fallback 1: `gemini-3.1-flash-lite`
     - Fallback 2: `gemini-2.5-flash`
 
 ### 4.5 Delivery (Gmail API)
@@ -144,7 +144,7 @@ gcloud run jobs update twitter-ai-digest \
 ### 9.4 Monitoring Policies
 - **Log Metric:** `twitter_digest_errors` (captures `❌` and `ERROR` severity).
 - **Alerting Policy:** `Twitter AI Digest - Errors Detected`.
-- **Primary Contact:** `your-email@example.com`
+- **Primary Contact:** `[operator-email]` (set via env var)
 
 ---
 

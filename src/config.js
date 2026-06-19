@@ -16,11 +16,11 @@ const MIN_FAVES_FILTER = parseInt(process.env.MIN_FAVES_FILTER || '5', 10);
 // ── Gemini AI ───────────────────────────────────────────────
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const PRIMARY_MODEL = 'gemini-3-flash-preview';
-const FALLBACK_MODEL = 'gemini-3.1-flash-lite-preview';
+const FALLBACK_MODEL = 'gemini-3.1-flash-lite';
 const STABLE_FALLBACK_MODEL = 'gemini-2.5-flash';
 
 // ── Email ───────────────────────────────────────────────────
-const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'your-email@example.com';
+const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 
 // ── Location/Time ──────────────────────────────────────────
 const TIMEZONE = process.env.TIMEZONE || 'America/Los_Angeles';
@@ -49,6 +49,7 @@ function validateConfig() {
   }
   
   if (!GEMINI_API_KEY) missing.push('GEMINI_API_KEY');
+  if (!RECIPIENT_EMAIL) missing.push('RECIPIENT_EMAIL');
 
   if (missing.length > 0) {
     console.error('\n❌ Missing required environment variables:\n');
