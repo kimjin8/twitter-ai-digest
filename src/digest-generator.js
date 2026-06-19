@@ -58,12 +58,14 @@ Your goal is to make complex ideas easy to read WITHOUT losing their precision. 
 
 4. Stay precise. Do not make sweeping generalizations or dramatic claims that go beyond what the source tweets actually say. "Anthropic launched a design tool, putting it in competition with Figma" is precise. "The companies building AI are coming for the apps that use AI" is dramatic and unverifiable.
 
+   PRESERVE THE SOURCE'S CERTAINTY. If a tweet frames a claim as conditional, leaked, unverified, rumored, predicted, or reported by someone else, you MUST carry that framing through. Do not upgrade a hedged or second-hand claim into an established fact. "If the leaked data is right, OpenAI runs 40%+ gross margins serving customers" must stay conditional — write "Leaked data suggests OpenAI runs ~40% gross margins on serving customers," NOT "OpenAI is achieving 40% gross margins." Also preserve the exact meaning of the claim: "serving customers" (running models for users) is not "customer service."
+
 5. When explaining WHY something matters, be specific about the distinction. Don't collapse nuance into vague language.
    BAD (too dense): "Engineering seniority in AI is now defined by JAX proficiency, signaling a shift from implementation to deep architectural understanding."
    BAD (too vague): "When hiring AI engineers, look for JAX on their resume. It's the clearest sign someone understands how models actually work under the hood."
    GOOD (clear and precise): "JAX experience is becoming a stronger hiring signal than PyTorch for senior AI roles. The distinction matters: PyTorch shows someone can use existing models, JAX shows they can optimize and build new ones."
 
-6. No metaphors or analogies. No jargon without a brief inline explanation. No hedging ("it seems", "arguably"). No filler ("it's worth noting", "interestingly").
+6. No metaphors or analogies. No jargon without a brief inline explanation. No filler ("it's worth noting", "interestingly"). Cut YOUR OWN hedging ("it seems", "arguably", "this could suggest") — but this is not license to strip a hedge that belongs to the source. A conditional or unverified claim from a tweet (rule 4) keeps its qualifier; what you remove is your own editorial uncertainty, not the source's.
 
 ---
 
@@ -74,7 +76,8 @@ SECTION 1 — KEY INSIGHTS
 - Be 1-2 SHORT sentences that deliver a specific, precise insight
 - State a conclusion supported by the tweet data (not a sweeping generalization)
 - Explain the specific distinction or non-obvious connection that makes this worth knowing
-- 15-30 words total
+- 15-30 words total (the source line below does not count toward this)
+- End with a source line: the author name(s) hyperlinked to the exact source tweet URL(s) the insight draws from, prefixed with "via" — identical in style to the briefing-card source line. Every insight MUST be traceable to a specific tweet in the Input Data. If an insight rests on a number, claim, or quote, the linked tweet(s) must be the one(s) that actually contain it. Never attribute an insight to a tweet that does not support it.
 
 SECTION 2 — BRIEFING CARDS (5-7 total)
 Organize under 3 pillars:
@@ -117,7 +120,8 @@ Header:
 Key Insights section:
 - Section label: "KEY INSIGHTS" in font-size 11px, letter-spacing 1.5px, uppercase, color #6b7280, margin-top 20px, margin-bottom 10px
 - Use <ul> with no bullets (list-style: none, padding-left: 0)
-- Each <li>: font-size 15px, line-height 1.5, color #1a1a1a, margin-bottom 12px, padding-left 16px, border-left: 3px solid #2563eb
+- Each <li>: font-size 15px, line-height 1.5, color #1a1a1a, margin-bottom 14px, padding-left 16px, border-left: 3px solid #2563eb
+- The insight text sits in a <span> or <p> (margin 0). On the line below it, render the source line: font-size 12px, color #9ca3af, margin-top 4px, prefixed with "via ". Author links: color #2563eb, text-decoration none, pointing to the source tweet URL.
 
 Pillar Headers:
 - Compact pill: background #1a1a2e, color #fff, font-size 11px, uppercase, letter-spacing 1px, padding 4px 12px, border-radius 4px, display inline-block, margin-top 28px, margin-bottom 12px
