@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 const {
   validateDigestHTML,
+  buildPrompt,
   MIN_DIGEST_HTML_LENGTH,
 } = require('../src/digest-generator');
 
@@ -112,5 +113,37 @@ describe('validateDigestHTML', () => {
     // finishReason omitted on purpose: even without it, structure alone fails.
     const res = validateDigestHTML(REAL_INCIDENT_HTML);
     expect(res.valid).toBe(false);
+  });
+
+  it('rejects a digest with fewer than 3 Key Insights (collapsed/redundant topics)', () => {
+    // Simulates the feedback scenario: model emitted only 2 distinct <li>s
+    const twoInsights = GOOD_HTML.replace(
+      '<li>Insight three connects two facts that matter.</li>',
+      ''
+    );
+    const res = validateDigestHTML(twoInsights, 'STOP');
+    expect(res.valid).toBe(false);
+    expect(res.reason).toMatch(/3 items/);
+  });
+
+  it('rejects a digest with more than 3 Key Insights', () => {
+    const fourInsights = GOOD_HTML.replace(
+      '<li>Insight three connects two facts that matter.</li>',
+      '<li>Insight three connects two facts that matter.</li><li>Insight four is extra.</li>'
+    );
+    const res = validateDigestHTML(fourInsights, 'STOP');
+    expect(res.valid).toBe(false);
+    expect(res.reason).toMatch(/3 items/);
+  });
+});
+
+describe('buildPrompt', () => {
+  it('includes a distinct-topic constraint for Key Insights', () => {
+    const tweets = [{
+      username: 'test', authorName: 'Test User', text: 'test tweet',
+      url: 'https://x.com/test/status/1', timestamp: '2026-06-24', metrics: {}
+    }];
+    const prompt = buildPrompt(tweets, 'June 24, 2026');
+    expect(prompt).toMatch(/DISTINCT TOPIC/i);
   });
 });

@@ -82,6 +82,7 @@ STRUCTURE:
 
 SECTION 1 — KEY INSIGHTS
 3 statements. Each must:
+- Cover a DISTINCT TOPIC — no two insights may address the same story, event, product launch, or claim. Before finalising, check: if two insights could be merged into one without losing information, rewrite the weaker one to cover a different topic from the data.
 - Be 1-2 SHORT sentences that deliver a specific, precise insight
 - State a conclusion supported by the tweet data (not a sweeping generalization)
 - Explain the specific distinction or non-obvious connection that makes this worth knowing
@@ -211,6 +212,12 @@ function validateDigestHTML(html, finishReason) {
   if (!/KEY INSIGHTS/i.test(trimmed)) {
     return { valid: false, reason: 'missing KEY INSIGHTS section' };
   }
+  // Enforce exactly 3 Key Insights. Fewer means the model collapsed topics; more
+  // means it misread the template. Either way the digest is malformed.
+  const liCount = (trimmed.match(/<li\b/gi) || []).length;
+  if (liCount !== 3) {
+    return { valid: false, reason: `KEY INSIGHTS must have exactly 3 items (found ${liCount})` };
+  }
   // Footer format: "N tweets · M sources · <date>". It is the last thing the
   // model emits, so its presence proves the body completed.
   if (!/tweets\s*·\s*\d+\s*sources/i.test(trimmed)) {
@@ -281,4 +288,4 @@ async function generateDigestHTML(topTweets) {
   }
 }
 
-module.exports = { generateDigestHTML, validateDigestHTML, NO_CONTENT_HTML, MIN_DIGEST_HTML_LENGTH };
+module.exports = { generateDigestHTML, validateDigestHTML, buildPrompt, NO_CONTENT_HTML, MIN_DIGEST_HTML_LENGTH };
