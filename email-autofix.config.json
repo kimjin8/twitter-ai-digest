@@ -1,7 +1,8 @@
 {
   "project": "twitter-ai-digest",
+  "origin": "https://github.com/kimjin8/twitter-ai-digest.git",
   "subjectMatch": "Twitter AI Intelligence Digest",
   "agentContext": "This project emails a daily AI digest. The email HTML is generated in src/digest-generator.js (buildPrompt + generateDigestHTML via Gemini); the tracked-account list and tunables are in src/config.js. Tests are vitest under tests/ — run: npx vitest run.",
-  "abRenderCmd": "node email-autofix/render-sample.js \"$OUT\"",
+  "abRenderCmd": "node email-autofix/render-sample.js",
   "scheduleHours": [3, 5]
 }

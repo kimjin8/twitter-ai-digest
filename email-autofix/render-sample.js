@@ -2,31 +2,30 @@
 // render-sample.js — render the digest email HTML from a fixed sample
 // ============================================================
 //
-// Used by run.sh to produce before/after email previews for the PR's
-// Verification, so you can open both in a browser and see the change.
+// Used by the email-autofix engine (the runner's before/after preview) AND by
+// the headless agent to verify a fix against the REAL output. Calls the real
+// generator (src/digest-generator) against fixed sample tweets, so only the
+// code change differs between renders — not the input.
 //
-// It calls the REAL generator (src/digest-generator) against a fixed set of
-// sample tweets, so the only thing that differs between "before" (origin/main)
-// and "after" (the fix branch) is the code change — not the input.
+// Output path: argv[2], else $OUT, else a temp file. The final path is printed
+// to stdout so the caller can read it.
+// GEMINI_API_KEY: from the project's .env when present, else the shared engine's
+// ~/.email-autofix/auth/.env — so it works headless under cron and for the
+// agent (which never needs the key in its own env). Gemini Flash, ≈ $0.
 //
-// Trusted-runner only: this loads GEMINI_API_KEY from the main repo's .env and
-// is invoked by run.sh AFTER the headless agent has exited — the agent never
-// sees the key. Rendering uses Gemini Flash (≈ $0), not your Max plan.
-//
-// Usage: MAIN_REPO_DIR=/abs/path/to/repo node feedback-loop/render-sample.js <output.html>
+// Usage:  node email-autofix/render-sample.js [output.html]
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const mainRepoDir = process.env.MAIN_REPO_DIR || path.join(__dirname, '..');
-// Load the key BEFORE requiring config/digest-generator so config picks it up.
+// Load the key BEFORE requiring config/digest-generator (dotenv won't override
+// an already-set var, so the project's .env wins when reachable).
 require('dotenv').config({ path: path.join(mainRepoDir, '.env') });
+require('dotenv').config({ path: path.join(os.homedir(), '.email-autofix', 'auth', '.env') });
 
-const out = process.argv[2];
-if (!out) {
-  console.error('usage: MAIN_REPO_DIR=<repo> node render-sample.js <output.html>');
-  process.exit(1);
-}
+const out = process.argv[2] || process.env.OUT || path.join(os.tmpdir(), `eaf-render-${Date.now()}.html`);
 
 const { generateDigestHTML } = require('../src/digest-generator');
 const sample = require('./sample-tweets.json');
@@ -34,7 +33,8 @@ const sample = require('./sample-tweets.json');
 (async () => {
   const { html, modelUsed } = await generateDigestHTML(sample);
   fs.writeFileSync(out, html);
-  console.error(`rendered ${path.basename(out)} (${html.length} chars, model ${modelUsed})`);
+  console.error(`rendered ${html.length} chars (model ${modelUsed})`);
+  console.log(out); // path on stdout for the caller (runner or agent) to read
 })().catch(err => {
   console.error('render-sample failed:', err.message);
   process.exit(1);
