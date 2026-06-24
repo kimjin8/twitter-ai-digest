@@ -15,7 +15,7 @@ const { getGoogleAuthClient, authenticateGoogle } = require("./src/auth");
 const twitterClient = require("./src/twitter-client");
 const { parseTweets } = require("./src/tweet-parser");
 const { scoreTweets } = require("./src/tweet-scorer");
-const { generateDigestHTML } = require("./src/digest-generator");
+const { generateDigestHTML, validateDigestHTML } = require("./src/digest-generator");
 const { sendEmail } = require("./src/email");
 const { saveRun } = require("./src/firestore");
 
@@ -105,6 +105,17 @@ async function runWorkflow({ dryRun = false } = {}) {
 
   // 5. Generate AI Digest
   const { html: htmlEmail, modelUsed } = await generateDigestHTML(topTweets);
+
+  // 5b. Final pre-send gate (defense in depth). generateDigestHTML already
+  // validates, but never trust degraded model output reaching the inbox: if a
+  // real digest (modelUsed set) fails the structural check here, abort loudly
+  // rather than send a broken email like the 2026-06-23 incident.
+  if (modelUsed) {
+    const { valid, reason } = validateDigestHTML(htmlEmail);
+    if (!valid) {
+      throw new Error(`Refusing to send malformed digest: ${reason} (${htmlEmail.length} chars)`);
+    }
+  }
 
   // 6. Send Email
   let emailMessageId = null;

@@ -11,6 +11,15 @@ const {
   TIMEZONE,
 } = require('./config');
 
+// Healthy digests run ~8,500 chars. The 2026-06-23 truncation bug produced
+// 1,741 chars (header + 2 insights, then cut off mid-tag). 3,000 is a safe
+// floor: well below any real digest, well above any truncated one.
+const MIN_DIGEST_HTML_LENGTH = 3000;
+
+// Sentinel returned when there is nothing to synthesize. Callers skip the
+// structural digest validation for this value.
+const NO_CONTENT_HTML = 'No high-signal updates today.';
+
 /**
  * Build the prompt for Gemini.
  *
@@ -158,10 +167,63 @@ ${JSON.stringify(data, null, 2)}`;
 }
 
 /**
+ * Validate that a generated digest is complete and well-formed.
+ *
+ * This is the guard the 2026-06-23 truncation bug bypassed. A Gemini response
+ * that finishes with MAX_TOKENS returns HTTP 200 with *partial* HTML and does
+ * NOT throw — so `generateContent` "succeeds" with a half-built digest (header
+ * + 2 insights, no cards, no footer, ending mid-tag at "<div style"). The old
+ * code accepted that and emailed it. Treat any degraded output as a failure so
+ * the caller can fall back to another model or abort, never send garbage.
+ *
+ * Each check targets a distinct failure mode of the same class — "the model
+ * returned 200 but the output is incomplete":
+ *   - finishReason: the model itself signalled it stopped early.
+ *   - length: a truncated digest is far shorter than a real one.
+ *   - endsWith('>'): truncation cuts mid-tag.
+ *   - balanced <div>: truncation leaves opened containers unclosed.
+ *   - KEY INSIGHTS / footer: required sections must both be present, proving
+ *     the document rendered top to bottom (the footer is emitted last).
+ *
+ * @param {string} html         Cleaned HTML returned by the model.
+ * @param {string} [finishReason] Gemini candidate finishReason, if available.
+ * @returns {{ valid: boolean, reason: string }}
+ */
+function validateDigestHTML(html, finishReason) {
+  if (finishReason && finishReason !== 'STOP') {
+    return { valid: false, reason: `model stopped early (finishReason=${finishReason})` };
+  }
+  if (!html || typeof html !== 'string') {
+    return { valid: false, reason: 'empty output' };
+  }
+  const trimmed = html.trim();
+  if (trimmed.length < MIN_DIGEST_HTML_LENGTH) {
+    return { valid: false, reason: `output too short (${trimmed.length} < ${MIN_DIGEST_HTML_LENGTH} chars)` };
+  }
+  if (!trimmed.endsWith('>')) {
+    return { valid: false, reason: 'output ends mid-tag (response was cut off)' };
+  }
+  const openDivs = (trimmed.match(/<div\b/gi) || []).length;
+  const closeDivs = (trimmed.match(/<\/div>/gi) || []).length;
+  if (openDivs !== closeDivs) {
+    return { valid: false, reason: `unbalanced <div> tags (${openDivs} open, ${closeDivs} close)` };
+  }
+  if (!/KEY INSIGHTS/i.test(trimmed)) {
+    return { valid: false, reason: 'missing KEY INSIGHTS section' };
+  }
+  // Footer format: "N tweets · M sources · <date>". It is the last thing the
+  // model emits, so its presence proves the body completed.
+  if (!/tweets\s*·\s*\d+\s*sources/i.test(trimmed)) {
+    return { valid: false, reason: 'missing footer (digest body incomplete)' };
+  }
+  return { valid: true, reason: 'ok' };
+}
+
+/**
  * Generate HTML email using Gemini with fallback logic.
  */
 async function generateDigestHTML(topTweets) {
-  if (topTweets.length === 0) return { html: 'No high-signal updates today.', modelUsed: null };
+  if (topTweets.length === 0) return { html: NO_CONTENT_HTML, modelUsed: null };
 
   console.log('🤖 Generating AI digest...');
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -186,16 +248,29 @@ async function generateDigestHTML(topTweets) {
         model: entry.name,
         generationConfig: {
           temperature: 0.2,
-          maxOutputTokens: 16384,
-          thinkingConfig: entry.name.includes('gemini-3') ? { thinkingBudget: 4096 } : undefined
+          // Raised from 16384: for Gemini 3, thinking tokens count against
+          // maxOutputTokens, so a long reasoning chain (thinkingBudget below)
+          // could starve the visible output and truncate the digest. Give the
+          // body ample headroom on top of the thinking budget.
+          maxOutputTokens: 32768,
+          thinkingConfig: entry.name.includes('gemini-3') ? { thinkingBudget: 2048 } : undefined
         }
       });
 
       const result = await model.generateContent(prompt);
+      const finishReason = result.response.candidates?.[0]?.finishReason;
       const html = result.response.text()
         .replace(/^```html\n?/i, '')
         .replace(/\n?```$/i, '')
         .trim();
+
+      // Truncated/degraded responses return HTTP 200 and do NOT throw. Validate
+      // and throw on failure so the catch below advances to the next model
+      // instead of emailing a broken digest.
+      const { valid, reason } = validateDigestHTML(html, finishReason);
+      if (!valid) {
+        throw new Error(`invalid digest output: ${reason} (${html.length} chars)`);
+      }
 
       console.log(`✅ Success with ${entry.label} (${html.length} chars)`);
       return { html, modelUsed: entry.name };
@@ -206,4 +281,4 @@ async function generateDigestHTML(topTweets) {
   }
 }
 
-module.exports = { generateDigestHTML };
+module.exports = { generateDigestHTML, validateDigestHTML, NO_CONTENT_HTML, MIN_DIGEST_HTML_LENGTH };
