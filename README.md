@@ -57,6 +57,23 @@ See the prompt history (versions A-F) documented in `ab-test-prompt.js`.
 
 ---
 
+## 🔁 Email-Feedback Autofix
+
+Reply to your daily digest email with feedback (e.g. *"insight 2 misreads the tweet"*) and an automated pipeline opens a fix **pull request** for you to review — running locally on your Claude Max plan ($0, no metered API).
+
+This project is wired into the shared **email-autofix engine** (`~/.email-autofix/`, see its own `README.md`):
+
+- **`email-autofix.config.json`** (repo root) — per-project config: subject matcher, where the email is generated, schedule, and the A/B render hook.
+- **`email-autofix/render-sample.js`** + **`sample-tweets.json`** — render a before/after email preview from a fixed sample, attached to the PR so you can open both and see the change.
+
+Daily at 3 AM (retry 5 AM if the Max limit was hit), the engine reads your reply, fixes the root cause with headless Claude Code, runs `npx vitest run`, and opens a PR with a 5-section body (Feedback / Root cause / Changes / Verification / Generalized learning). A run that doesn't complete posts a note to a GitHub *"email-autofix — run log"* issue and retries.
+
+Runtime state and logs live under `~/.email-autofix/` (not in this repo). To install or pause the schedule, see the engine README.
+
+> **Note:** the fix step needs `claude` authenticated to your Max plan, which works from your own shell / the launchd job — not from inside a sandboxed Claude Code Bash tool.
+
+---
+
 ## ☁️ Deployment
 
 This project is optimized for serverless execution as a **Cloud Run Job** triggered by **Cloud Scheduler**.

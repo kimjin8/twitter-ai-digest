@@ -9,6 +9,9 @@ google-token.json
 # Cached data
 data/
 
+# email-autofix: runtime state/logs live in ~/.email-autofix (not in this repo).
+# email-autofix.config.json and email-autofix/ (A/B render hook) are committed.
+
 # OS files
 .DS_Store
 

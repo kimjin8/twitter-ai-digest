@@ -35,8 +35,12 @@ const GOOGLE_TOKEN_PATH = path.join(__dirname, '..', 'google-token.json');
 const USER_ID_CACHE_PATH = path.join(__dirname, '..', 'data', 'user-id-cache.json');
 
 // ── Google OAuth Scopes ─────────────────────────────────────
+// gmail.send: deliver the digest. gmail.readonly: let the feedback loop read
+// your replies to the digest (feedback-loop/). Adding a scope requires a
+// one-time re-auth: `node index.js --auth`.
 const GOOGLE_SCOPES = [
-  'https://www.googleapis.com/auth/gmail.send'
+  'https://www.googleapis.com/auth/gmail.send',
+  'https://www.googleapis.com/auth/gmail.readonly'
 ];
 
 // ── Validation ──────────────────────────────────────────────

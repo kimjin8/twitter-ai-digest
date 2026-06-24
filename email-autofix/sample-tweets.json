@@ -1,0 +1,42 @@
+[
+  {
+    "username": "ai_lab_news",
+    "authorName": "AI Lab News",
+    "text": "New open-source speech model runs real-time transcription on a laptop CPU at 80ms latency. No GPU required. Removes a big cost barrier for voice apps that previously needed dedicated H100 inference.",
+    "url": "https://x.com/ai_lab_news/status/1900000000000000001",
+    "timestamp": "2026-06-22T15:10:00.000Z",
+    "metrics": { "like_count": 4200, "retweet_count": 880, "reply_count": 140, "quote_count": 95 }
+  },
+  {
+    "username": "model_watch",
+    "authorName": "Model Watch",
+    "text": "Leaked benchmark suggests the new frontier model hits 92% on the agentic coding eval, up from 78%. Unverified, single source. If it holds, the gap to closed models on long-horizon tasks is closing fast.",
+    "url": "https://x.com/model_watch/status/1900000000000000002",
+    "timestamp": "2026-06-22T13:02:00.000Z",
+    "metrics": { "like_count": 3100, "retweet_count": 540, "reply_count": 210, "quote_count": 130 }
+  },
+  {
+    "username": "infra_daily",
+    "authorName": "Infra Daily",
+    "text": "A startup shipped a tool that turns plain-English specs into typed API clients across 6 languages. Early users report cutting integration time from days to under an hour for standard REST endpoints.",
+    "url": "https://x.com/infra_daily/status/1900000000000000003",
+    "timestamp": "2026-06-22T11:48:00.000Z",
+    "metrics": { "like_count": 1900, "retweet_count": 320, "reply_count": 75, "quote_count": 40 }
+  },
+  {
+    "username": "research_feed",
+    "authorName": "Research Feed",
+    "text": "New paper: training small models on the reasoning traces of large ones matches 80% of the teacher's accuracy at 5% of the inference cost. The distinction that matters is trace quality, not trace volume.",
+    "url": "https://x.com/research_feed/status/1900000000000000004",
+    "timestamp": "2026-06-22T09:30:00.000Z",
+    "metrics": { "like_count": 2600, "retweet_count": 610, "reply_count": 95, "quote_count": 70 }
+  },
+  {
+    "username": "founder_notes",
+    "authorName": "Founder Notes",
+    "text": "Watching teams replace their first support hire with an agent that drafts replies and escalates edge cases. The winners pair it with a tight human review loop, not full automation. Trust is the bottleneck, not capability.",
+    "url": "https://x.com/founder_notes/status/1900000000000000005",
+    "timestamp": "2026-06-22T08:05:00.000Z",
+    "metrics": { "like_count": 5400, "retweet_count": 720, "reply_count": 260, "quote_count": 180 }
+  }
+]
